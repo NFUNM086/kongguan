@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>空间数据管理中心 PRD</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/mermaid.min.js"></script>
+<style>
+:root {
+  --paper: #faf9f6;
+  --surface: #ffffff;
+  --text: #1c1917;
+  --text-muted: #6b6560;
+  --text-faint: #9c958d;
+  --accent: #1e4fd8;
+  --accent-glow: #e8edfa;
+  --border: #e4e1dc;
+  --border-light: #f0ede9;
+  --sidebar-bg: #111827;
+  --sidebar-text: #9ca3af;
+  --sidebar-active: #ffffff;
+  --sidebar-hover: #1f2937;
+  --table-head: #1e293b;
+  --table-head-text: #ffffff;
+  --table-stripe: #f8f7f5;
+  --tag-bg: #eef2ff;
+  --tag-text: #1e4fd8;
+  --success: #16a34a;
+  --warning: #d97706;
+  --danger: #dc2626;
+  --info: #2563eb;
+  --max-content: 780px;
+  --sidebar-width: 260px;
+  --header-height: 56px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  color: var(--text); background: var(--paper); line-height: 1.75; display: flex; min-height: 100vh;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  position: fixed; left: 0; top: 0; bottom: 0; width: var(--sidebar-width);
+  background: var(--sidebar-bg); color: var(--sidebar-text);
+  overflow-y: auto; z-index: 100; display: flex; flex-direction: column;
+  scrollbar-width: thin; scrollbar-color: #374151 transparent;
+}
+.sidebar-header {
+  padding: 24px 20px 20px; border-bottom: 1px solid #1f2937;
+  position: sticky; top: 0; background: var(--sidebar-bg); z-index: 2;
+}
+.sidebar-title { font-size: 15px; font-weight: 600; color: var(--sidebar-active); letter-spacing: 0.02em; }
+.sidebar-subtitle { font-size: 11px; color: #6b7280; margin-top: 4px; letter-spacing: 0.05em; text-transform: uppercase; }
+.sidebar-nav { padding: 14px 0; flex: 1; }
+.nav-section { margin-bottom: 2px; }
+.nav-section-header {
+  display: flex; align-items: center; gap: 10px; padding: 8px 20px; font-size: 12px;
+  font-weight: 600; color: #6b7280; letter-spacing: 0.06em; text-transform: uppercase;
+  cursor: pointer; user-select: none; transition: color 0.15s;
+}
+.nav-section-header:hover { color: #9ca3af; }
+.nav-section-header .arrow { font-size: 8px; transition: transform 0.2s; display: inline-block; }
+.nav-section-header.collapsed .arrow { transform: rotate(-90deg); }
+.nav-items { list-style: none; }
+.nav-items.collapsed { display: none; }
+.nav-items a {
+  display: block; padding: 6px 20px 6px 36px; font-size: 13px;
+  color: var(--sidebar-text); text-decoration: none; transition: all 0.15s;
+  border-left: 2px solid transparent; line-height: 1.5;
+}
+.nav-items a:hover { color: #e5e7eb; background: var(--sidebar-hover); }
+.nav-items a.active { color: var(--sidebar-active); background: #1e3a5f33; border-left-color: var(--accent); }
+.sidebar-footer { padding: 16px 20px; border-top: 1px solid #1f2937; font-size: 11px; color: #4b5563; }
+
+/* ── Main ── */
+.main { margin-left: var(--sidebar-width); flex: 1; min-width: 0; }
+.header {
+  position: sticky; top: 0; background: rgba(250,249,246,0.92);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border); z-index: 50; padding: 0 48px;
+  height: var(--header-height); display: flex; align-items: center; justify-content: space-between;
+}
+.header-left { display: flex; align-items: center; gap: 12px; }
+.header-dot { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+.header-title { font-size: 14px; font-weight: 600; color: var(--text); letter-spacing: 0.02em; }
+.header-version { font-size: 11px; color: var(--text-faint); background: var(--border-light); padding: 2px 8px; border-radius: 3px; }
+
+/* ── Content ── */
+.content { max-width: var(--max-content); margin: 0 auto; padding: 40px 48px 80px; }
+
+h1 { font-size: 32px; font-weight: 700; color: var(--text); letter-spacing: -0.01em; margin-bottom: 8px; line-height: 1.25; }
+h2 { font-size: 22px; font-weight: 600; color: var(--text); margin-top: 52px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid var(--border); }
+h3 { font-size: 17px; font-weight: 600; color: var(--text); margin-top: 36px; margin-bottom: 14px; }
+h4 { font-size: 14px; font-weight: 600; color: var(--text-muted); margin-top: 28px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+h5 { font-size: 14px; font-weight: 600; color: var(--accent); margin: 18px 0 8px; }
+p { margin-bottom: 16px; color: var(--text); }
+strong { font-weight: 600; color: var(--text); }
+thead th strong { font-weight: 600; color: inherit; }
+
+/* ── Tables ── */
+.table-wrap { overflow-x: auto; margin-bottom: 24px; border: 1px solid var(--border); border-radius: 6px; background: var(--surface); }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; line-height: 1.6; }
+thead th {
+  background: var(--table-head); color: var(--table-head-text); font-weight: 500;
+  text-align: left; padding: 10px 14px; font-size: 12.5px; letter-spacing: 0.03em; white-space: nowrap;
+}
+tbody td { padding: 9px 14px; border-bottom: 1px solid var(--border-light); vertical-align: top; }
+tbody tr:last-child td { border-bottom: none; }
+tbody tr:nth-child(even) { background: var(--table-stripe); }
+tbody tr:hover { background: var(--accent-glow); }
+
+/* ── Code ── */
+pre {
+  background: #1e293b; color: #e2e8f0; padding: 20px 24px; border-radius: 6px; overflow-x: auto;
+  font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace; font-size: 13px; line-height: 1.6; margin-bottom: 24px;
+}
+code { font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace; font-size: 0.9em; background: var(--border-light); padding: 2px 6px; border-radius: 3px; }
+pre code { background: none; padding: 0; border-radius: 0; }
+
+/* ── Blockquote ── */
+blockquote {
+  border-left: 3px solid var(--accent); background: var(--accent-glow); padding: 12px 18px;
+  margin-bottom: 20px; border-radius: 0 6px 6px 0; font-size: 13.5px; color: var(--text-muted);
+}
+blockquote p { margin-bottom: 0; }
+
+hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
+.section-divider { margin: 56px 0 40px; border: none; border-top: 1px solid var(--border); }
+
+/* ── Tags ── */
+.tag { display: inline-block; font-size: 11.5px; font-weight: 500; padding: 2px 10px; border-radius: 3px; letter-spacing: 0.02em; }
+.tag-blue { background: #dbeafe; color: #1e40af; }
+.tag-green { background: #dcfce7; color: #166534; }
+.tag-red { background: #fee2e2; color: #991b1b; }
+.tag-yellow { background: #fef3c7; color: #92400e; }
+.tag-gray { background: #f3f4f6; color: #4b5563; }
+
+/* ── Mermaid ── */
+.mermaid-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 24px; margin-bottom: 24px; overflow-x: auto; }
+.mermaid-wrap .mermaid { display: flex; justify-content: center; }
+
+/* ── Lists ── */
+.content ul, .content ol { margin-bottom: 20px; padding-left: 24px; }
+.content li { margin-bottom: 6px; line-height: 1.7; }
+
+/* ── Page intro ── */
+.page-intro { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 28px 32px; margin-bottom: 40px; }
+.page-intro-meta { display: flex; gap: 32px; margin-top: 16px; font-size: 13px; color: var(--text-muted); }
+.page-intro-meta span { display: flex; align-items: center; gap: 6px; }
+.page-intro-meta .label { color: var(--text-faint); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* ── Back to top ── */
+.back-to-top {
+  position: fixed; bottom: 32px; right: 32px; width: 40px; height: 40px; border-radius: 50%;
+  background: var(--sidebar-bg); color: white; border: none; cursor: pointer; font-size: 18px;
+  display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s;
+  z-index: 200; box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.back-to-top.visible { opacity: 0.85; }
+.back-to-top:hover { opacity: 1; }
+
+@media (max-width: 900px) {
+  .sidebar { display: none; } .main { margin-left: 0; }
+  .content { padding: 24px 20px 60px; } .header { padding: 0 20px; }
+  h1 { font-size: 26px; } h2 { font-size: 19px; margin-top: 40px; }
+}
+@media print {
+  .sidebar, .header, .back-to-top { display: none; }
+  .main { margin-left: 0; } .content { max-width: 100%; padding: 0; } body { background: white; }
+}
+</style>
+</head>
+<body>
+
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-title">空间数据管理中心</div>
+    <div class="sidebar-subtitle">Product Requirements Document</div>
+  </div>
+  <div class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span class="arrow">▼</span> 版本记录
+        </div>
+        <ul class="nav-items">
+          <li><a href="#版本记录">版本记录</a></li>
+        </ul>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span class="arrow">▼</span> 一、引言
+        </div>
+        <ul class="nav-items">
+          <li><a href="#1-1-项目背景">1.1 项目背景</a></li>
+          <li><a href="#1-2-适用用户">1.2 适用用户</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span class="arrow">▼</span> 二、系统概述
+        </div>
+        <ul class="nav-items">
+          <li><a href="#2-1-整体架构">2.1 整体架构</a></li>
+          <li><a href="#2-2-页面导航结构">2.2 页面导航结构</a></li>
+          <li><a href="#2-3-业务流程图">2.3 业务流程图</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span class="arrow">▼</span> 三、各功能模块详细说明
+        </div>
+        <ul class="nav-items">
+          <li><a href="#3-1-登录页">3.1 登录页</a></li>
+          <li><a href="#3-2-源模型管理">3.2 源模型管理</a></li>
+          <li><a href="#3-3-模型上传">3.3 模型上传</a></li>
+          <li><a href="#3-4-模型检测">3.4 模型检测</a></li>
+          <li><a href="#3-5-任务管理">3.5 任务管理</a></li>
+          <li><a href="#3-6-我的模型库">3.6 我的模型库</a></li>
+          <li><a href="#3-7-预览查看">3.7 预览查看</a></li>
+          <li><a href="#3-8-格式转换">3.8 格式转换</a></li>
+          <li><a href="#3-9-轻量化">3.9 轻量化</a></li>
+          <li><a href="#3-10-参数配准">3.10 参数配准</a></li>
+          <li><a href="#3-11-模型服务">3.11 模型服务</a></li>
+          <li><a href="#3-12-场景服务">3.12 场景服务</a></li>
+          <li><a href="#3-13-空间数据统计">3.13 空间数据统计</a></li>
+        </ul>
+      </div>
+      <div class="nav-section">
+        <div class="nav-section-header" onclick="toggleSection(this)">
+          <span class="arrow">▼</span> 附录
+        </div>
+        <ul class="nav-items">
+          <li><a href="#模型格式支持矩阵">模型格式支持矩阵</a></li>
+        </ul>
+      </div>
+  </div>
+  <div class="sidebar-footer">V1.2 · 2026.07.16</div>
+</nav>
+
+<div class="main">
+  <header class="header">
+    <div class="header-left">
+      <div class="header-dot"></div>
+      <span class="header-title">空间数据管理中心 PRD</span>
+    </div>
+    <span class="header-version">V1.2</span>
+  </header>
+
+  <div class="content">
+    <h1>空间数据管理中心 PRD</h1>
+
+    <div class="page-intro">
+      <p style="margin-bottom:0;color:var(--text-muted);font-size:14px;">三维空间数据的统一接入、管理、处理、服务发布与统计分析平台，为上层数字孪生可视化平台提供数据支撑。</p>
+      <div class="page-intro-meta">
+        <span><span class="label">版本</span> V1.2</span>
+        <span><span class="label">更新日期</span> 2026.07.16</span>
+        <span><span class="label">文档类型</span> 产品需求文档</span>
+      </div>
+    </div>
+
+<h2 id="版本记录">版本记录</h2>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>版本号</strong></th>
+<th><strong>更新内容</strong></th>
+<th><strong>更新日期</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>V1.0</td>
+<td>（空）</td>
+<td>2026.07.14 及之前</td>
+</tr>
+<tr>
+<td>V1.1</td>
+<td>1、模型上传：根据模型格式区分入口<br>2、模型检测：需判断上传数据格式是否和入口规定格式一致。故增加模型检测未通过弹窗<br>3、格式转换、轻量化两者功能独立分开<br>4、格式转换：各格式的参数设置面板<br>5、轻量化：新开页面、参数设置<br>6、任务管理：新增轻量化任务<br>7、空间数据服务分为模型服务、场景服务<br>8、源模型管理中，若执行添加至我的模型库操作，则可以预览查看</td>
+<td>2026.07.15</td>
+</tr>
+<tr>
+<td>V1.2</td>
+<td>1、轻量化：参数设置交互完善（预定义方案参数禁用、自定义方案可编辑）、增加处理方案说明与交互注释<br>2、任务管理：任务状态驱动按钮状态与样式，已添加至模型库不可重复添加<br>3、我的模型库：增加轻量化按钮<br>4、模型检测：删除格式不符情况，Revit版本问题提示改为导出IFC再重新上传<br>5、源模型管理：点击【添加至模型库】增加loading状态</td>
+<td>2026.07.16</td>
+</tr>
+</tbody></table></div>
+<hr class="section-divider">
+<h2 id="一-引言">一、引言</h2>
+<h3 id="1-1-项目背景">1.1 项目背景</h3>
+<p>空间数据管理中心负责三维空间数据的统一接入、管理、处理、服务发布与统计分析，为上层数字孪生可视化平台提供数据支撑。</p>
+<h3 id="1-2-适用用户">1.2 适用用户</h3>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>角色</strong></th>
+<th><strong>核心场景</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>信息化与技术支持人员</td>
+<td>模型上传、格式转换、服务发布、系统管理</td>
+</tr>
+<tr>
+<td>生产调度与工艺人员</td>
+<td>模型预览查看、场景服务浏览</td>
+</tr>
+<tr>
+<td>管理决策层</td>
+<td>空间数据统计图表查看</td>
+</tr>
+</tbody></table></div>
+<hr class="section-divider">
+<h2 id="二-系统概述">二、系统概述</h2>
+<h3 id="2-1-整体架构">2.1 整体架构</h3>
+<pre><code>
+登录页
+ └── 空间数据管理
+      ├── 源模型管理（含模型上传、模型检测）
+      ├── 任务管理（含格式转换任务、轻量化任务）
+      └── 我的模型库（含预览查看、参数配准、格式转换、轻量化、发布服务）
+      ├── 空间数据服务
+      │    ├── 模型服务
+      │    └── 场景服务
+      └── 空间数据统计
+</code></pre>
+<h3 id="2-2-页面导航结构">2.2 页面导航结构</h3>
+<ul>
+<li><strong>空间数据管理</strong>（一级）</li>
+<li>源模型管理（二级）</li>
+<li>任务管理（二级）</li>
+<li>我的模型库（二级）</li>
+<li><strong>空间数据服务</strong>（一级）</li>
+<li>模型服务（二级）</li>
+<li>场景服务（二级）</li>
+<li><strong>空间数据统计</strong>（一级）</li>
+</ul>
+<p><strong>通用页面元素：</strong> 顶部标题栏固定显示"空间数据管理中心"，右上角显示用户标识及退出登录入口。所有列表页统一分页组件：<code>共 N 条记录  第 X/Y 页   [页码]   跳至 [__] 页   [条/页▼]</code>。</p>
+<h3 id="2-3-业务流程图">2.3 业务流程图</h3>
+<div class="mermaid-wrap"><pre class="mermaid">
+flowchart TD
+    A[用户登录] --&gt; B[源模型管理]
+    B --&gt; C[模型上传]
+    C --&gt; D[模型检测]
+    D --&gt;|检测通过| B
+    D --&gt;|检测不通过| C
+    B --&gt;|格式转换| E[任务管理]
+    B --&gt;|轻量化| E
+    B --&gt;|添加至模型库| F[我的模型库]
+    E --&gt;|转换/轻量化成功| F
+    F --&gt; G[预览查看]
+    F --&gt; H[参数配准]
+    F --&gt;|格式转换| E
+    F --&gt;|轻量化| E
+    F --&gt; I[发布模型服务]
+    I --&gt; J[模型服务]
+    J --&gt; K[场景服务]
+    B --&gt; L[空间数据统计]
+    F --&gt; L
+    J --&gt; L
+    K --&gt; L
+</pre></div>
+<p><strong>核心业务路径：</strong></p>
+<p>1. 模型上传与检测：登录 → 源模型管理 → 模型上传（7 类入口）→ 模型检测（自动触发）→ 检测通过回到源模型管理列表</p>
+<p>2. 格式转换与轻量化：源模型管理或我的模型库 → 提交任务 → 任务管理监控进度 → 处理完成可添加至我的模型库</p>
+<p>3. 服务发布：我的模型库 → 发布模型服务 → 模型服务管理 → 多个模型服务组合为场景服务</p>
+<p>4. 预览：源模型管理需先"添加至模型库"后预览，或先执行格式转换生成任务后预览</p>
+<hr class="section-divider">
+<h2 id="三-各功能模块详细说明">三、各功能模块详细说明</h2>
+<h3 id="3-1-登录页">3.1 登录页</h3>
+<p><strong>对应原型文件：</strong> 登录页.html</p>
+<p><strong>功能描述：</strong> 系统唯一入口，用户通过账号密码登录后进入主界面，默认展示源模型管理页。</p>
+<p><strong>页面结构（左右分栏）：</strong></p>
+<ul>
+<li><strong>左侧品牌展示区：</strong></li>
+<li><strong>右侧登录表单：</strong> 账号输入框、密码输入框、<code>登录</code> 按钮</li>
+</ul>
+<p><strong>交互流程：</strong></p>
+<p>1. 用户输入账号密码，点击"登录"</p>
+<p>2. 校验通过后进入系统主界面，默认展示源模型管理页</p>
+<hr class="section-divider">
+<h3 id="3-2-源模型管理">3.2 源模型管理</h3>
+<p><strong>对应原型文件：</strong> 源模型管理.html</p>
+<p><strong>功能描述：</strong> 所有已上传模型的统一列表管理页面，支持多维度筛选、关键字搜索、列头排序，按模型状态提供差异化操作按钮。</p>
+<p><strong>页面结构：</strong></p>
+<ul>
+<li><strong>筛选条件区域（横向排列）：</strong> 搜索框、模型类型下拉框、模型格式下拉框、模型状态下拉框、重置按钮</li>
+</ul>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>筛选字段</strong></th>
+<th><strong>控件类型</strong></th>
+<th><strong>选项</strong></th>
+<th><strong>默认值</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>搜索框</td>
+<td>文本输入框</td>
+<td>placeholder: "请输入模型名称搜索"</td>
+<td>空</td>
+</tr>
+<tr>
+<td>模型类型</td>
+<td>下拉框</td>
+<td>全部 / BIM数据 / 手工模型 / 倾斜摄影 / 地形数据 / 影像数据 / 点云数据 / CAD数据</td>
+<td>全部</td>
+</tr>
+<tr>
+<td>模型格式</td>
+<td>下拉框</td>
+<td>全部 / DXF / DWG / DWF / DGN / PLN / RVT / PCD / PLY / TXT / LAS / OSGB / OBJ / FBX / STL / 3DS / DEM / TIFF / STEP</td>
+<td>全部</td>
+</tr>
+<tr>
+<td>模型状态</td>
+<td>下拉框</td>
+<td>全部 / <span class="tag tag-yellow">检测中</span> / <span class="tag tag-green">上传成功</span> / <span class="tag tag-red">检测不通过</span></td>
+<td>全部</td>
+</tr>
+</tbody></table></div>
+<blockquote>
+<p><strong>布局说明：</strong> 筛选区域为单行横向排列，左侧依次为搜索框、模型类型下拉、模型格式下拉、模型状态下拉，右侧为重置按钮，各控件之间间距均匀。</p>
+</blockquote>
+<ul>
+<li><strong>筛选交互规则：</strong></li>
+<li><strong>关键字搜索：</strong> 搜索框支持模糊匹配模型名称，用户输入后自动触发列表刷新</li>
+<li><strong>类型与格式联动：</strong> 选择"模型类型"后，"模型格式"下拉框选项联动更新，仅显示该类型对应的格式选项；选择"全部"时显示所有格式</li>
+<li><strong>列头排序：</strong> 表格列头"模型名称"、"模型大小"、"上传时间"带有排序三角箭头（↑↓），支持点击切换升序/降序；排序变更后列表自动刷新并保持其他筛选条件不变。默认按上传时间倒序排列</li>
+<li><strong>筛选即时生效：</strong> 所有筛选条件（搜索框、下拉框、排序）变更后自动刷新列表数据，无需手动点击查询按钮</li>
+<li><strong>多条件 AND 逻辑：</strong> 各筛选条件之间为 AND 关系，同时满足所有条件才显示对应记录</li>
+<li><strong>重置：</strong> 点击"重置"按钮，所有筛选条件恢复默认值（搜索框清空、模型类型=全部、模型格式=全部、模型状态=全部、排序恢复默认），同时刷新列表数据</li>
+<li><strong>加载态：</strong> 筛选条件变更触发的列表刷新期间，表格区域展示 loading 动画，避免用户重复操作</li>
+<li><strong>顶部操作按钮：</strong> <code>重置</code>、<code>上传模型</code>、<code>批量下载</code>、<code>批量删除</code></li>
+<li><strong>模型列表表格：</strong></li>
+</ul>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>列名</strong></th>
+<th><strong>说明</strong></th>
+<th><strong>是否可排序</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>勾选列</td>
+<td>多选复选框</td>
+<td>否</td>
+</tr>
+<tr>
+<td>模型名称</td>
+<td>模型名称</td>
+<td>是（↑↓）</td>
+</tr>
+<tr>
+<td>模型类型</td>
+<td>BIM数据 / 手工模型 / 倾斜摄影 / 地形数据 / 影像数据 / 点云数据 / CAD数据</td>
+<td>否</td>
+</tr>
+<tr>
+<td>模型格式</td>
+<td>DXF / DWG / DWF / DGN / PLN / RVT / PCD / PLY / TXT / LAS / OSGB / OBJ / FBX / STL / 3DS / DEM / TIFF / STEP</td>
+<td>否</td>
+</tr>
+<tr>
+<td>模型大小</td>
+<td>示例：35.22MB、2.23GB</td>
+<td>是（↑↓）</td>
+</tr>
+<tr>
+<td>模型状态</td>
+<td><span class="tag tag-yellow">检测中</span> / <span class="tag tag-green">上传成功</span> / <span class="tag tag-red">检测不通过</span>，附颜色圆点标识</td>
+<td>否</td>
+</tr>
+<tr>
+<td>上传时间</td>
+<td>上传时间戳</td>
+<td>是（↑↓）</td>
+</tr>
+<tr>
+<td>上传人员</td>
+<td>上传用户</td>
+<td>否</td>
+</tr>
+<tr>
+<td>操作</td>
+<td>按状态动态变化</td>
+<td>否</td>
+</tr>
+</tbody></table></div>
+<ul>
+<li><strong>模型状态颜色圆点：</strong></li>
+</ul>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>状态</strong></th>
+<th><strong>圆点颜色</strong></th>
+<th><strong>色值</strong></th>
+<th><strong>说明</strong></th>
+</tr></thead><tbody>
+<tr>
+<td><span class="tag tag-yellow">检测中</span></td>
+<td>橙色</td>
+<td>#F59A23</td>
+<td>上传完成后自动触发检测，等待检测结果</td>
+</tr>
+<tr>
+<td><span class="tag tag-green">上传成功</span></td>
+<td>绿色</td>
+<td>#95F204</td>
+<td>检测通过，模型可用</td>
+</tr>
+<tr>
+<td><span class="tag tag-red">检测不通过</span></td>
+<td>红色</td>
+<td>#D9001B</td>
+<td>检测<span class="tag tag-red">失败</span>，需查看原因并重新上传</td>
+</tr>
+</tbody></table></div>
+<ul>
+<li><strong>分页组件：</strong> <code>共 N 条记录  第 X/Y 页   [页码]   跳至 [__] 页   [条/页▼]</code></li>
+</ul>
+<p><strong>示例数据（原型中 8 条记录）：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>模型名称</strong></th>
+<th><strong>模型类型</strong></th>
+<th><strong>模型格式</strong></th>
+<th><strong>模型大小</strong></th>
+<th><strong>模型状态</strong></th>
+<th><strong>状态圆点颜色</strong></th>
+<th><strong>上传人员</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>送水泵房泵组</td>
+<td>手工模型</td>
+<td>FBX</td>
+<td>35.22MB</td>
+<td><span class="tag tag-yellow">检测中</span></td>
+<td>橙色</td>
+<td>张小刚</td>
+</tr>
+<tr>
+<td>送水泵房泵组</td>
+<td>手工模型</td>
+<td>OBJ</td>
+<td>35.22MB</td>
+<td><span class="tag tag-green">上传成功</span></td>
+<td>绿色</td>
+<td>张小刚</td>
+</tr>
+<tr>
+<td>送水泵房泵组</td>
+<td>手工模型</td>
+<td>GLB</td>
+<td>35.22MB</td>
+<td><span class="tag tag-green">上传成功</span></td>
+<td>绿色</td>
+<td>张小刚</td>
+</tr>
+<tr>
+<td>送水泵房泵组</td>
+<td>手工模型</td>
+<td>TXT</td>
+<td>35.22MB</td>
+<td><span class="tag tag-red">检测不通过</span></td>
+<td>红色</td>
+<td>张小刚</td>
+</tr>
+<tr>
+<td>输水管道</td>
+<td>BIM数据</td>
+<td>RVT</td>
+<td>35.22MB</td>
+<td><span class="tag tag-red">检测不通过</span></td>
+<td>红色</td>
+<td>张小刚</td>
+</tr>
+<tr>
+<td>送水泵房泵组</td>
+<td>BIM数据</td>
+<td>DXF</td>
+<td>35.22MB</td>
+<td><span class="tag tag-green">上传成功</span></td>
+<td>绿色</td>
+<td>张小刚</td>
+</tr>
+<tr>
+<td>水厂地块</td>
+<td>倾斜摄影</td>
+<td>OSGB</td>
+<td>2.23GB</td>
+<td><span class="tag tag-green">上传成功</span></td>
+<td>绿色</td>
+<td>张小刚</td>
+</tr>
+<tr>
+<td>水厂周边环境</td>
+<td>手工模型</td>
+<td>3DS</td>
+<td>35.22MB</td>
+<td><span class="tag tag-green">上传成功</span></td>
+<td>绿色</td>
+<td>张小刚</td>
+</tr>
+</tbody></table></div>
+<p><strong>行内操作按钮（按模型状态）：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>模型状态</strong></th>
+<th><strong>可用操作按钮</strong></th>
+</tr></thead><tbody>
+<tr>
+<td><span class="tag tag-yellow">检测中</span></td>
+<td>无可用操作按钮</td>
+</tr>
+<tr>
+<td><span class="tag tag-green">上传成功</span></td>
+<td>格式转换、轻量化、添加至模型库、删除</td>
+</tr>
+<tr>
+<td><span class="tag tag-red">检测不通过</span></td>
+<td>重新上传、删除、可能原因</td>
+</tr>
+<tr>
+<td>已添加至模型库</td>
+<td>格式转换、轻量化、查看（替代"添加至模型库"按钮）、删除</td>
+</tr>
+</tbody></table></div>
+<p><strong>弹窗与面板：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>弹窗</strong></th>
+<th><strong>触发方式</strong></th>
+<th><strong>内容</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>可能原因</td>
+<td>hover"可能原因"图标</td>
+<td>显示<span class="tag tag-red">失败</span>原因文案：Revit版本不支持。<span class="tag tag-red">检测不通过</span>情况：RVT 的 Revit 版本在 2021 之后</td>
+</tr>
+<tr>
+<td>添加至模型库成功提示</td>
+<td>添加成功</td>
+<td>已将<code>模型名称</code>源文件添加到<code>空间数据管理-我的模型库</code>列表内</td>
+</tr>
+<tr>
+<td>退出登录</td>
+<td>点击右上角用户标识</td>
+<td>退出登录下拉选项</td>
+</tr>
+</tbody></table></div>
+<p><strong>交互流程：</strong></p>
+<p>1. 模型上传完成后出现在列表中，状态为"检测中"时等待系统自动检测，无操作按钮，状态列展示橙色圆点</p>
+<p>2. 检测通过 → 状态变为"上传成功"，状态列展示绿色圆点，可执行格式转换、轻量化或添加至模型库</p>
+<p>3. 源模型管理页面不能直接预览——需先执行格式转换生成任务后预览，或"添加至模型库"后通过我的模型库预览</p>
+<p>4. 点击"添加至模型库"→ 按钮先进入 loading 加载状态（显示加载动画，按钮暂时不可点击），待后端返回成功后，按钮变为"查看"（点击可跳转预览查看），同时弹出成功提示弹窗</p>
+<p>5. 检测不通过 → 状态列展示红色圆点，hover"可能原因"图标查看提示，点击"重新上传"重新选择文件</p>
+<p>6. 格式转换限制：GLB 和 DXF 不支持格式转换；已转换过的模型不能再次转换</p>
+<p>7. 轻量化限制：仅 GLB 可轻量化（手工模型和 BIM 数据后台自动转 GLB 后也支持），已轻量化的可再次轻量化但不保证成功</p>
+<p>8. 表格列表支持多选勾选，配合"批量下载"、"批量删除"按钮使用；勾选后按钮从禁用态变为可用态</p>
+<hr class="section-divider">
+<h3 id="3-3-模型上传">3.3 模型上传</h3>
+<p><strong>对应原型文件：</strong> 模型上传.html</p>
+<p><strong>功能描述：</strong> 三维模型上传入口，按数据类型分为 7 个入口，各有不同的格式支持和大小限制。上传完成后自动触发模型检测流程，模型同时出现在源模型管理列表中。</p>
+<p><strong>页面结构：</strong></p>
+<ul>
+<li><strong>7 类上传入口（初始无数据标签下）：</strong></li>
+</ul>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>数据分类</strong></th>
+<th><strong>上传按钮</strong></th>
+<th><strong>格式说明</strong></th>
+<th><strong>大小限制</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>BIM数据</td>
+<td>上传BIM数据</td>
+<td>RVT、PLN，允许 ZIP/RAR，RVT 仅限 Revit2021 及更早版本</td>
+<td>≤500M</td>
+</tr>
+<tr>
+<td>手工模型</td>
+<td>上传手工模型</td>
+<td>OBJ、FBX、STL、3DS，允许 ZIP/RAR</td>
+<td>≤500M</td>
+</tr>
+<tr>
+<td>倾斜摄影</td>
+<td>上传倾斜摄影</td>
+<td>ZIP、RAR 压缩包</td>
+<td>≤10G</td>
+</tr>
+<tr>
+<td>地形数据</td>
+<td>上传地形数据</td>
+<td>TIFF、DEM，允许 ZIP/RAR</td>
+<td>≤500M</td>
+</tr>
+<tr>
+<td>影像数据</td>
+<td>上传影像数据</td>
+<td>TIFF，允许 ZIP/RAR</td>
+<td>≤500M</td>
+</tr>
+<tr>
+<td>点云数据</td>
+<td>上传点云数据</td>
+<td>PCD、PLY、TXT、LAS，允许 ZIP/RAR</td>
+<td>≤500M</td>
+</tr>
+<tr>
+<td>CAD数据</td>
+<td>上传CAD数据</td>
+<td>DXF、DWG、DWF、DGN，允许 ZIP/RAR</td>
+<td>≤500M</td>
+</tr>
+</tbody></table></div>
+<p>默认状态：选中 BIM数据 分类，右侧面板展示对应格式说明和大小限制。</p>
+<ul>
+<li><strong>上传流程：</strong></li>
+</ul>
+<p>1. 用户在初始无数据标签下，左侧点击分类标签，右侧面板切换展示对应分类的格式说明和大小限制</p>
+<p>2. 点击"上传[分类名]"按钮 → 系统弹出系统文件选择窗口（由浏览器/操作系统原生提供），文件选择过滤器仅展示该分类支持的格式（含 ZIP/RAR 压缩包）</p>
+<p>3. 用户选择文件并确认后，上传开始——此时：</p>
+<ul>
+<li>文件开始上传至后端，上传进度可展示在按钮区域（如按钮文案变为"上传中…"并置灰禁用，避免重复点击）</li>
+<li>上传完成后自动触发模型检测流程（详见 3.4）</li>
+<li>模型同时出现在"已有数据"标签页的表格和源模型管理列表中</li>
+</ul>
+<p>4. 上传前的客户端校验：</p>
+<ul>
+<li>文件大小：若超过该分类的大小限制，前端拦截并提示"文件大小超过限制（≤XXX），请重新选择文件"</li>
+<li>文件格式：若文件扩展名不在该分类支持的格式列表中，前端拦截并提示"文件格式不支持，请选择 XXX 格式文件"</li>
+</ul>
+<hr class="section-divider">
+<h3 id="3-4-模型检测">3.4 模型检测</h3>
+<p><strong>对应原型文件：</strong> 模型检测.html</p>
+<p><strong>功能描述：</strong> 上传完成后自动触发的检测流程，验证文件大小合规性、可读性。RVT 额外判断 Revit 版本是否超过 2021。</p>
+<p><strong>页面结构：</strong></p>
+<ul>
+<li><strong>进度阶段标题：</strong> <code>上传模型</code> / <code>检测中</code> / <code>检测通过</code></li>
+<li><strong>表格：</strong> 与源模型管理同结构</li>
+<li><strong>操作按钮：</strong> <code>重置</code>、<code>批量下载</code>、<code>批量删除</code>；行内 <code>重新上传</code>、<code>格式转换</code>、<code>添加至模型库</code>、<code>删除</code>、<code>取消上传</code>、<code>后台上传</code></li>
+</ul>
+<p><strong>检测结果弹窗（3 种状态）：</strong></p>
+<p><strong>状态1 — 检测进行中：</strong></p>
+<ul>
+<li>模型上传完成后自动触发检测流程，此时弹出检测进度弹窗：</li>
+<li>弹窗顶部展示 loading 动效，下方显示文案"正在检测中，请稍候……"</li>
+<li>弹窗底部提供两个操作按钮：后台上传、取消上传</li>
+<li>后台上传： 用户点击"后台上传"后，弹窗关闭，检测任务转为异步执行，不阻塞用户继续操作，用户可继续上传其他模型或浏览其他页面。检测完成后，模型状态自动更新为"上传成功"或"检测不通过"，无需用户手动刷新。</li>
+<li>取消上传： 用户点击"取消上传"后，弹窗关闭，同时中断当前上传和检测流程，该条上传记录从列表中移除，不保留在源模型管理中。</li>
+<li>等待期间： loading 动效持续播放，弹窗不自动关闭，用户必须选择"后台上传"或"取消上传"其中之一才能关闭弹窗继续操作。</li>
+</ul>
+<p><strong>状态2 — 检测通过：</strong></p>
+<ul>
+<li>绿色确认图标</li>
+<li>文案：<code>您此次上传的模型名称为 测试，格式为 RVT，大小为 23.39 MB</code></li>
+<li>子文案：<code>模型检测通过</code></li>
+<li>按钮：<code>完成</code></li>
+</ul>
+<p><strong>状态3 — 检测不通过：</strong></p>
+<ul>
+<li>文案：<code>您此次上传的模型名称为 测试，格式为 DEM，大小为 23.39 MB</code></li>
+<li>失败原因：<code>Revit2021 以上高版本，请导出 IFC 格式后重新上传</code></li>
+<li>子文案：<code>模型检测不通过</code></li>
+<li>按钮：<code>完成</code></li>
+</ul>
+<p><strong>交互流程：</strong></p>
+<p>1. 上传后自动触发检测，状态变为"检测中"</p>
+<p>2. 检测通过 → 弹窗含绿色图标 → 点击"完成" → 状态更新为"上传成功"</p>
+<p>3. 检测不通过 → 弹窗显示 Revit 版本原因（Revit2021 以上高版本，请导出 IFC 格式后重新上传）→ 点击"完成" → 状态更新为"检测不通过"，可在源模型管理中查看详情或重新上传</p>
+<hr class="section-divider">
+<h3 id="3-5-任务管理">3.5 任务管理</h3>
+<p><strong>对应原型文件：</strong> 任务管理.html</p>
+<p><strong>功能描述：</strong> 以任务卡片形式展示格式转换和轻量化任务的执行状态与结果，跟踪进度、查看对比数据、处理失败原因、添加结果至模型库。</p>
+<p><strong>页面结构：</strong></p>
+<ul>
+<li><strong>顶部操作栏：</strong> <code>重置</code>、<code>批量添加至模型库</code>、<code>批量删除</code></li>
+<li><strong>任务卡片列表（每个卡片包含）：</strong></li>
+</ul>
+<p><strong>基础信息：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>字段</strong></th>
+<th><strong>说明</strong></th>
+<th><strong>示例值</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>任务类型</td>
+<td>格式转换 / 轻量化</td>
+<td>格式转换</td>
+</tr>
+<tr>
+<td>开始时间</td>
+<td>任务开始</td>
+<td>2025-09-01 14:30:00</td>
+</tr>
+<tr>
+<td>结束时间</td>
+<td>完成时间，未完成显"-"</td>
+<td>2025-09-01 14:42:00</td>
+</tr>
+<tr>
+<td>处理耗时</td>
+<td>耗时，未完成显"-"</td>
+<td>00:12:00</td>
+</tr>
+<tr>
+<td>任务状态</td>
+<td><span class="tag tag-yellow">进行中</span> / <span class="tag tag-green">已完成</span> / <span class="tag tag-red">失败</span></td>
+<td><span class="tag tag-green">已完成</span></td>
+</tr>
+</tbody></table></div>
+<p><strong>行内操作按钮（按任务状态驱动）：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>任务状态</strong></th>
+<th><strong>可用按钮</strong></th>
+<th><strong>按钮样式说明</strong></th>
+</tr></thead><tbody>
+<tr>
+<td><span class="tag tag-yellow">进行中</span></td>
+<td>删除</td>
+<td>删除：红色可用</td>
+</tr>
+<tr>
+<td><span class="tag tag-green">已完成</span></td>
+<td>添加至模型库、预览、删除</td>
+<td>添加至模型库：白色可用；预览：白色可用；删除：红色可用</td>
+</tr>
+<tr>
+<td><span class="tag tag-green">已完成</span>且已添加至模型库</td>
+<td>已添加至模型库（禁用）、预览、删除</td>
+<td>已添加至模型库：绿色禁用（不可重复添加）；预览：白色可用；删除：红色可用</td>
+</tr>
+<tr>
+<td><span class="tag tag-red">失败</span></td>
+<td>可能原因、删除</td>
+<td>预览/添加至模型库：灰色禁用；可能原因：hover展示；删除：红色可用</td>
+</tr>
+</tbody></table></div>
+<blockquote>
+<p><strong>交互规则说明：</strong></p>
+</blockquote>
+<p>></p>
+<blockquote>
+<p>* 「添加至模型库」按钮仅在任务状态为「已完成」且未被添加过时，呈白色可用状态；一旦执行添加操作后，按钮变为「已添加至模型库」绿色禁用状态，不可重复添加。</p>
+<p>* 「预览」按钮在任务「已完成」时白色可用；「失败」或「进行中」时灰色禁用。</p>
+<p>* 「可能原因」图标仅在任务「失败」时显示，hover 展示后端返回的报错内容。</p>
+</blockquote>
+<p><strong>轻量化任务对比详情（仅轻量化成功后展示）：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>指标</strong></th>
+<th><strong>任务前</strong></th>
+<th><strong>任务后</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>顶点数量</td>
+<td>363,365</td>
+<td>203,946</td>
+</tr>
+<tr>
+<td>模型面数</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>模型格式</td>
+<td>GLB</td>
+<td>GLB</td>
+</tr>
+<tr>
+<td>模型大小</td>
+<td>0.21MB</td>
+<td>0.05MB</td>
+</tr>
+<tr>
+<td>网格数量</td>
+<td>12</td>
+<td>12</td>
+</tr>
+<tr>
+<td>纹理大小</td>
+<td>0.00MB</td>
+<td>0.00MB</td>
+</tr>
+</tbody></table></div>
+<p><strong>弹窗：</strong> <code>可能原因</code>——失败时点击弹出，显示"可能原因：模型体量过小"，说明"具体文字前端根据后端返回报错内容进行填入"。</p>
+<p><strong>分页：</strong> <code>共 400 条记录  第 1 / 80 页  [1]...[9]  跳至 [__] 页  [条/页▼]</code></p>
+<p><strong>交互流程：</strong></p>
+<p>1. 提交转换/轻量化后任务立即出现在此页。进行中显示开始时间，结束时间和耗时显示"-"</p>
+<p>2. 完成后显示实际结束时间和耗时，轻量化额外展示前后对比数据；按钮变为可用状态（白色）</p>
+<p>3. 失败时出现"可能原因"图标，hover图标展示后端返回的报错内容；预览和添加至模型库按钮灰色禁用</p>
+<p>4. 可单个或批量将成功结果"添加至模型库"，可"预览"查看结果</p>
+<p>5. 添加至模型库后，按钮变为绿色禁用状态"已添加至模型库"，不可重复添加</p>
+<hr class="section-divider">
+<h3 id="3-6-我的模型库">3.6 我的模型库</h3>
+<p><strong>对应原型文件：</strong> 我的模型库.html、发布服务.html</p>
+<p><strong>功能描述：</strong> 用户个人模型资源集中管理页，存放从源模型管理和任务管理添加的模型，支持预览、配准、转换、轻量化、发布服务。</p>
+<p><strong>页面结构：</strong></p>
+<ul>
+<li><strong>顶部操作栏：</strong> <code>批量删除</code>、<code>批量下载</code>、<code>重置</code></li>
+<li><strong>模型列表表格：</strong></li>
+</ul>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>列名</strong></th>
+<th><strong>说明</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>模型名称</td>
+<td>模型名称</td>
+</tr>
+<tr>
+<td>模型格式</td>
+<td>DXF / DWG / DWF / DGN / PLN / RVT / PCD / PLY / TXT/ LAS / OSGB / OBJ / FBX / STL / 3DS / DEM / TIFF / STEP</td>
+</tr>
+<tr>
+<td>模型大小</td>
+<td>文件大小</td>
+</tr>
+<tr>
+<td>添加时间</td>
+<td>添加至模型库的时间</td>
+</tr>
+<tr>
+<td>上传人员</td>
+<td>上传用户</td>
+</tr>
+<tr>
+<td>模型处理</td>
+<td>未处理 / 格式转换 / 轻量化</td>
+</tr>
+<tr>
+<td>操作</td>
+<td>查看、重命名、轻量化、参数配准、发布服务、下载、删除</td>
+</tr>
+</tbody></table></div>
+<ul>
+<li><strong>分页：</strong> <code>共 400 条记录  第 1 / 80 页  [1]...[9]  跳至 [__] 页  [条/页▼]</code></li>
+</ul>
+<p><strong>示例数据（8 条）：</strong> 送水泵房泵组（FBX/OBJ/GLB/STL/DGN）、配水泵房（RVT）、输水管道（FBX），上传人均为张小刚</p>
+<p><strong>行内操作按钮：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>按钮</strong></th>
+<th><strong>说明</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>查看</td>
+<td>跳转预览查看页面，在线预览 3D 模型</td>
+</tr>
+<tr>
+<td>格式转换</td>
+<td>提交格式转换任务</td>
+</tr>
+<tr>
+<td>轻量化</td>
+<td>跳转轻量化页面</td>
+</tr>
+<tr>
+<td>参数配准</td>
+<td>跳转参数配准页面</td>
+</tr>
+<tr>
+<td>发布服务</td>
+<td>弹出"发布模型服务"弹窗</td>
+</tr>
+<tr>
+<td>下载</td>
+<td>下载模型文件</td>
+</tr>
+<tr>
+<td>重命名</td>
+<td>弹出重命名弹窗</td>
+</tr>
+<tr>
+<td>删除</td>
+<td>从模型库删除</td>
+</tr>
+</tbody></table></div>
+<p><strong>弹窗：</strong></p>
+<p><strong>发布服务弹窗：</strong></p>
+<ul>
+<li>标题：<code>发布模型服务</code></li>
+<li><code>模型名称</code>（只读，回显当前名称）</li>
+<li><code>模型服务名称</code>（可编辑，默认填模型名称，支持修改）</li>
+<li>按钮：<code>取消</code> / <code>发布</code></li>
+</ul>
+<p><strong>重命名弹窗：</strong> 输入框 + 确定/取消</p>
+<p><strong>业务规则说明：</strong></p>
+<p>1. 一个模型可以发布为一个【模型服务】，模型服务名称默认为模型名称，支持修改</p>
+<p>2. 一个【场景服务】包含多个【模型服务】，新建一个场景服务，添加多个模型服务，发布成场景服务，名称可自定义</p>
+<p><strong>交互流程：</strong></p>
+<p>1. 模型从源模型管理或任务管理添加至模型库，处理状态初始为"未处理"</p>
+<p>2. 点击"发布服务"→ 弹窗回显模型名称，服务名称可修改 → 确认发布</p>
+<p>3. 点击"重命名"→ 弹窗修改模型名称</p>
+<p>4. 点击"查看"→ 跳转预览查看页</p>
+<hr class="section-divider">
+<h3 id="3-7-预览查看">3.7 预览查看</h3>
+<p><strong>对应原型文件：</strong> 预览查看.html</p>
+<p><strong>功能描述：</strong> 3D 模型在线预览页，源格式在后台转为GLB或者3Dtiles格式才能在线预览，加载广州市GIS场景和该模型，支持模型平移、旋转、缩放。页面左侧为模型列表，右侧为 3D 预览。</p>
+<p><strong>页面结构：</strong></p>
+<p><strong>左侧 — 模型信息区：</strong> 展示模型源文件、格式、大小、面数、顶点、贴图等统计信息。</p>
+<p><strong>中部 — 3D 预览区：</strong> 可视化展示 BIM 模型。</p>
+<p><strong>右侧 — 构件详情浮窗：</strong> 在 3D 预览区内点击构件后弹出，展示选中构件属性信息（构件属性字段和数据不固定，根据属性json自动生成）。</p>
+<p><strong>交互操作：</strong></p>
+<ul>
+<li>页面右上角提供【返回】按钮，点击可退出当前模型预览页面；</li>
+<li>在中部 3D 预览区域内，点击任意模型构件，右侧弹出【构件详情】弹窗；</li>
+<li>构件详情分为「基本属性」「限制条件」两大模块，展示构件类别、族类型、截面参数、标高、偏移等信息；弹窗支持关闭；</li>
+<li>预览区左侧提供收起/展开控件按钮，支持左侧模型信息面板收起隐藏或者展开显示；</li>
+</ul>
+<hr class="section-divider">
+<h3 id="3-8-格式转换">3.8 格式转换</h3>
+<p><strong>对应原型文件：</strong> 格式转换.html</p>
+<p><strong>功能描述：</strong> 将原始格式转换为 GLB、3Dtiles、Terrain、PNG 等目标格式。按数据类别提供不同参数面板，提交后生成任务进入任务管理。</p>
+<p><strong>交互说明：</strong></p>
+<ul>
+<li>在源模型管理页，点击格式转换按钮后，界面中间弹出弹窗，进行格式转换的参数设置。</li>
+</ul>
+<p><strong>参数总览表</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>序号</strong></th>
+<th><strong>数据类型</strong></th>
+<th><strong>输出格式</strong></th>
+<th><strong>坐标系</strong></th>
+<th><strong>原点坐标</strong></th>
+<th><strong>是否压缩</strong></th>
+<th><strong>同时发布成服务</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td>BIM 数据（RVT、PLN）</td>
+<td>GLB</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>默认勾选</td>
+</tr>
+<tr>
+<td>2</td>
+<td>OSGB</td>
+<td>3Dtiles</td>
+<td>可选（默认 WGS84）</td>
+<td>有</td>
+<td>可选（默认"是"）</td>
+<td>默认勾选</td>
+</tr>
+<tr>
+<td>3</td>
+<td>影像 TIFF</td>
+<td>PNG 数据集</td>
+<td>可选（默认 WGS84）</td>
+<td>有</td>
+<td>—</td>
+<td>默认勾选</td>
+</tr>
+<tr>
+<td>4</td>
+<td>地形 TIFF</td>
+<td>Terrain 数据集</td>
+<td>可选（默认 WGS84）</td>
+<td>有</td>
+<td>—</td>
+<td>默认勾选</td>
+</tr>
+<tr>
+<td>5</td>
+<td>DEM</td>
+<td>Terrain 数据集</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>默认勾选</td>
+</tr>
+<tr>
+<td>6</td>
+<td>点云数据（PCD、PLY、TXT、LAS）</td>
+<td>3Dtiles</td>
+<td>可选（默认 Web 投影 3857）</td>
+<td>有</td>
+<td>—</td>
+<td>默认勾选</td>
+</tr>
+<tr>
+<td>7</td>
+<td>手工模型（OBJ、FBX、STL、3DS）</td>
+<td>GLB</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>默认勾选</td>
+</tr>
+<tr>
+<td>8</td>
+<td>CAD 数据（DXF、DWG、DWF、DGN）</td>
+<td>DXF</td>
+<td>—</td>
+<td>—</td>
+<td>—</td>
+<td>默认勾选</td>
+</tr>
+</tbody></table></div>
+<hr class="section-divider">
+<h4 id="各类型详细参数说明">各类型详细参数说明</h4>
+<p><strong>1. BIM 数据（RVT、PLN）</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>参数</strong></th>
+<th><strong>值</strong></th>
+<th><strong>默认值</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>输出格式</td>
+<td>GLB</td>
+<td>GLB</td>
+</tr>
+<tr>
+<td>坐标系</td>
+<td>无</td>
+<td>—</td>
+</tr>
+<tr>
+<td>原点坐标</td>
+<td>无</td>
+<td>—</td>
+</tr>
+<tr>
+<td>是否压缩</td>
+<td>无</td>
+<td>—</td>
+</tr>
+<tr>
+<td>同时发布成服务</td>
+<td>勾选框</td>
+<td>默认勾选</td>
+</tr>
+</tbody></table></div>
+<p>弹窗仅包含"输出格式"和"同时发布成服务"两个参数，无坐标系和原点坐标设置。</p>
+<hr class="section-divider">
+<p><strong>2. OSGB</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>参数</strong></th>
+<th><strong>值</strong></th>
+<th><strong>默认值</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>输出格式</td>
+<td>3Dtiles</td>
+<td>3Dtiles</td>
+</tr>
+<tr>
+<td>坐标系</td>
+<td>WGS84 地理坐标系（4326）/ Web 投影坐标系（3857）</td>
+<td>WGS84 地理坐标系（4326）</td>
+</tr>
+<tr>
+<td>原点坐标</td>
+<td>有（三个输入框）</td>
+<td>默认值均为 0</td>
+</tr>
+<tr>
+<td>是否压缩</td>
+<td>是 / 否</td>
+<td>是</td>
+</tr>
+<tr>
+<td>同时发布成服务</td>
+<td>勾选框</td>
+<td>默认勾选</td>
+</tr>
+</tbody></table></div>
+<p><strong>原点坐标说明：</strong> 若切换坐标系，下方原点坐标的名称和数据会自动重置。</p>
+<ul>
+<li>WGS84 地理坐标系（4326）：原点坐标输入经度（单位：°）、纬度（单位：°）、高程（单位：米）</li>
+<li>Web 投影坐标系（3857）：原点坐标输入 X 东向距离（单位：米）、Y 北向距离（单位：米）、Z 高程（单位：米）</li>
+</ul>
+<hr class="section-divider">
+<p><strong>3. 影像 TIFF</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>参数</strong></th>
+<th><strong>值</strong></th>
+<th><strong>默认值</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>输出格式</td>
+<td>PNG 数据集</td>
+<td>PNG 数据集</td>
+</tr>
+<tr>
+<td>坐标系</td>
+<td>WGS84 地理坐标系（4326）/ Web 投影坐标系（3857）</td>
+<td>WGS84 地理坐标系（4326）</td>
+</tr>
+<tr>
+<td>原点坐标</td>
+<td>有（三个输入框）</td>
+<td>默认值均为 0</td>
+</tr>
+<tr>
+<td>是否压缩</td>
+<td>无</td>
+<td>—</td>
+</tr>
+<tr>
+<td>同时发布成服务</td>
+<td>勾选框</td>
+<td>默认勾选</td>
+</tr>
+</tbody></table></div>
+<p><strong>原点坐标说明：</strong> 若切换坐标系，下方原点坐标的名称和数据会自动重置。</p>
+<ul>
+<li>WGS84 地理坐标系（4326）：原点坐标输入经度（单位：°）、纬度（单位：°）、高程（单位：米）</li>
+<li>Web 投影坐标系（3857）：原点坐标输入 X 东向距离（单位：米）、Y 北向距离（单位：米）、Z 高程（单位：米）</li>
+</ul>
+<hr class="section-divider">
+<p><strong>4. 地形 TIFF</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>参数</strong></th>
+<th><strong>值</strong></th>
+<th><strong>默认值</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>输出格式</td>
+<td>Terrain 数据集</td>
+<td>Terrain 数据集</td>
+</tr>
+<tr>
+<td>坐标系</td>
+<td>WGS84 地理坐标系（4326）/ Web 投影坐标系（3857）</td>
+<td>WGS84 地理坐标系（4326）</td>
+</tr>
+<tr>
+<td>原点坐标</td>
+<td>有（三个输入框）</td>
+<td>默认值均为 0</td>
+</tr>
+<tr>
+<td>是否压缩</td>
+<td>无</td>
+<td>—</td>
+</tr>
+<tr>
+<td>同时发布成服务</td>
+<td>勾选框</td>
+<td>默认勾选</td>
+</tr>
+</tbody></table></div>
+<p><strong>原点坐标说明：</strong> 若切换坐标系，下方原点坐标的名称和数据会自动重置。</p>
+<ul>
+<li>WGS84 地理坐标系（4326）：原点坐标输入经度（单位：°）、纬度（单位：°）、高程（单位：米）</li>
+<li>Web 投影坐标系（3857）：原点坐标输入 X 东向距离（单位：米）、Y 北向距离（单位：米）、Z 高程（单位：米）</li>
+</ul>
+<hr class="section-divider">
+<p><strong>5. DEM</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>参数</strong></th>
+<th><strong>值</strong></th>
+<th><strong>默认值</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>输出格式</td>
+<td>Terrain 数据集</td>
+<td>Terrain 数据集</td>
+</tr>
+<tr>
+<td>坐标系</td>
+<td>无</td>
+<td>—</td>
+</tr>
+<tr>
+<td>原点坐标</td>
+<td>无</td>
+<td>—</td>
+</tr>
+<tr>
+<td>是否压缩</td>
+<td>无</td>
+<td>—</td>
+</tr>
+<tr>
+<td>同时发布成服务</td>
+<td>勾选框</td>
+<td>默认勾选</td>
+</tr>
+</tbody></table></div>
+<p>弹窗仅包含"输出格式"和"同时发布成服务"两个参数，无坐标系和原点坐标设置。</p>
+<hr class="section-divider">
+<p><strong>6. 点云数据（PCD、PLY、TXT、LAS）</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>参数</strong></th>
+<th><strong>值</strong></th>
+<th><strong>默认值</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>输出格式</td>
+<td>3Dtiles</td>
+<td>3Dtiles</td>
+</tr>
+<tr>
+<td>坐标系</td>
+<td>WGS84 地理坐标系（4326）/ Web 投影坐标系（3857）</td>
+<td><strong>Web 投影坐标系（3857）</strong></td>
+</tr>
+<tr>
+<td>原点坐标</td>
+<td>有（三个输入框）</td>
+<td>默认值均为 0</td>
+</tr>
+<tr>
+<td>是否压缩</td>
+<td>无</td>
+<td>—</td>
+</tr>
+<tr>
+<td>同时发布成服务</td>
+<td>勾选框</td>
+<td>默认勾选</td>
+</tr>
+</tbody></table></div>
+<blockquote>
+<p><strong>注意：</strong> 点云数据是唯一一个坐标系默认选"Web 投影坐标系（3857）"的类型，其他有坐标系选择的类型默认均为"WGS84 地理坐标系（4326）"。</p>
+</blockquote>
+<p><strong>原点坐标说明：</strong> 若切换坐标系，下方原点坐标的名称和数据会自动重置。</p>
+<ul>
+<li>WGS84 地理坐标系（4326）：原点坐标输入经度（单位：°）、纬度（单位：°）、高程（单位：米）</li>
+<li>Web 投影坐标系（3857）：原点坐标输入 X 东向距离（单位：米）、Y 北向距离（单位：米）、Z 高程（单位：米）</li>
+</ul>
+<hr class="section-divider">
+<p><strong>7. 手工模型（OBJ、FBX、STL、3DS）</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>参数</strong></th>
+<th><strong>值</strong></th>
+<th><strong>默认值</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>输出格式</td>
+<td>GLB</td>
+<td>GLB</td>
+</tr>
+<tr>
+<td>坐标系</td>
+<td>无</td>
+<td>—</td>
+</tr>
+<tr>
+<td>原点坐标</td>
+<td>无</td>
+<td>—</td>
+</tr>
+<tr>
+<td>是否压缩</td>
+<td>无</td>
+<td>—</td>
+</tr>
+<tr>
+<td>同时发布成服务</td>
+<td>勾选框</td>
+<td>默认勾选</td>
+</tr>
+</tbody></table></div>
+<p>弹窗仅包含"输出格式"和"同时发布成服务"两个参数，无坐标系和原点坐标设置。</p>
+<hr class="section-divider">
+<p><strong>8. CAD 数据（DXF、DWG、DWF、DGN）</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>参数</strong></th>
+<th><strong>值</strong></th>
+<th><strong>默认值</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>输出格式</td>
+<td>DXF</td>
+<td>DXF</td>
+</tr>
+<tr>
+<td>坐标系</td>
+<td>无</td>
+<td>—</td>
+</tr>
+<tr>
+<td>原点坐标</td>
+<td>无</td>
+<td>—</td>
+</tr>
+<tr>
+<td>是否压缩</td>
+<td>无</td>
+<td>—</td>
+</tr>
+<tr>
+<td>同时发布成服务</td>
+<td>勾选框</td>
+<td>默认勾选</td>
+</tr>
+</tbody></table></div>
+<p>弹窗仅包含"输出格式"和"同时发布成服务"两个参数，无坐标系和原点坐标设置。</p>
+<hr class="section-divider">
+<h3 id="3-9-轻量化">3.9 轻量化</h3>
+<p><strong>对应原型文件：</strong> 轻量化.html</p>
+<p><strong>功能描述：</strong> 对 GLB 格式模型执行轻量化，采用二次误差边坍缩算法减面 + Draco 压缩 + 纹理压缩。页面分 4 个流程状态展示。</p>
+<h4 id="3-9-1-模型处理方案选择">3.9.1 模型处理方案选择</h4>
+<p>提供4种处理方案，除「自定义处理」外，其余3种方案的参数均为<strong>预定义值、不可修改</strong>（参数输入框/开关置灰禁用）。各方案说明如下：</p>
+<p><strong>1. 推荐处理（Recommend）【默认选中】</strong></p>
+<ul>
+<li>适用场景：大多数数字孪生项目，平衡模型精度与文件体积</li>
+<li>预设参数（不可修改）：</li>
+<li>模型减面：简化率 0.60，错误率 0.0001，勾选「保持边界」「保持外观」</li>
+<li>模型压缩：纹理格式 WEBP，纹理质量 75；勾选 draco压缩、去重复、索引重排</li>
+<li>模型合并：全部辅助选项不启用</li>
+</ul>
+<p><strong>2. 极限处理（Utmost）</strong></p>
+<ul>
+<li>适用场景：大屏海量模型、移动端低配环境，追求最小模型体积，适度牺牲细节</li>
+<li>预设参数（不可修改）：</li>
+<li>模型减面：简化率 0.20，错误率 0.1000；勾选「保持边界」，取消「保持外观」</li>
+<li>模型压缩：纹理格式 WEBP，纹理质量 60；勾选 draco压缩、去重复、索引重排</li>
+<li>模型合并：勾选「展平层级」「GPU实例化」，取消「材质合并」</li>
+</ul>
+<p><strong>3. 无损处理（Lossless）</strong></p>
+<ul>
+<li>适用场景：对模型外形精度要求极高，不做几何体简化，仅做数据压缩优化</li>
+<li>预设参数（不可修改）：</li>
+<li>模型减面：简化率 0.60，错误率 0.0001，勾选「保持边界」「保持外观」（<strong>几何不执行删减</strong>）</li>
+<li>模型压缩：纹理格式 WEBP，纹理质量 100；勾选去重复、索引重排，<strong>取消 draco压缩</strong></li>
+<li>模型合并：全部辅助选项不启用</li>
+</ul>
+<p><strong>4. 自定义处理（Customize）</strong></p>
+<ul>
+<li>适用场景：用户自定义参数，灵活调整各模块配置</li>
+<li>交互特点：所有参数输入框/开关均可编辑（参数为可用状态），用户可手动开启/关闭「模型减面」「模型压缩」「模型合并」三大处理模块，自由调整全部参数</li>
+</ul>
+<blockquote>
+<p><strong>交互规则注释：</strong></p>
+</blockquote>
+<p>></p>
+<blockquote>
+<p>* 推荐处理、极限处理、无损处理：参数为预定义值，参数输入框/开关为<strong>禁用状态</strong>（灰色不可编辑），用户无法修改参数数值。</p>
+<p>* 自定义处理：参数输入框/开关为<strong>可用状态</strong>，用户可自由编辑参数。</p>
+<p>* 切换方案时：选中「推荐/极限/无损」→ 参数自动填充为预设值并锁定禁用；选中「自定义」→ 参数解锁为可编辑状态。</p>
+<p>* 用户手动修改任意参数后，自动切换选中「自定义处理」标签。</p>
+</blockquote>
+<h4 id="3-9-2-模型预览区域-画布">3.9.2 模型预览区域（画布）</h4>
+<p>1. 实时载入待处理三维模型，支持常规三维操作：旋转、平移、缩放查看模型效果；</p>
+<p>2. 点击【轻量化模型】按钮后，即轻量化任务执行期间，画布遮罩展示加载动画 + 文字「正在轻量化中……」；</p>
+<p>3. 任务完成后，右下角弹出<strong>模型处理报告</strong>悬浮面板，展示轻量化前后对比指标：</p>
+<ul>
+<li>模型文件大小、三角面数量、网格数量、纹理大小；</li>
+<li>附加信息：节点数量、材质数量、图元数量、动画数量；</li>
+<li>底部展示状态文字：<code>压缩减面成功</code>。</li>
+</ul>
+<h4 id="3-9-3-底部操作按钮组">3.9.3 底部操作按钮组</h4>
+<h5 id="">执行前置状态（未发起任务）</h5>
+<ul>
+<li><strong>轻量化模型（主按钮）</strong>：提交轻量化后台任务</li>
+</ul>
+<p>1. 点击后弹窗提示：<code>已创建轻量化任务，可前往任务管理查看进度；也可停留当前页面等待</code>；</p>
+<p>2. 页面进入加载状态，异步执行轻量化运算；</p>
+<h5 id="">任务完成状态（轻量化执行成功后）</h5>
+<p>按钮切换为3项：</p>
+<p>1. <strong>还原模型</strong>：放弃轻量化结果，恢复至原始上传模型预览</p>
+<p>2. <strong>保存模型</strong>：将轻量化成果持久化至空间数据资源库</p>
+<p>3. <strong>下载模型</strong>：本地导出轻量化完成后的模型文件</p>
+<h4 id="3-9-4-通用交互规则">3.9.4 通用交互规则</h4>
+<p>1. <strong>返回按钮</strong>：左上角【返回】，点击退出模型轻量化页面，回到上一级空间数据列表；</p>
+<p>2. 用户会话信息：右上角展示登录账号名称；</p>
+<p>3. 参数联动约束：</p>
+<ul>
+<li>若取消勾选【模型减面】，后台不执行几何体简化逻辑，仅执行压缩/合并；</li>
+<li>若取消勾选【模型压缩】，不对纹理、几何进行编码压缩；</li>
+</ul>
+<p>4. 任务机制：轻量化采用<strong>异步任务</strong>，支持用户跳转页面，在【任务管理】统一查看全部处理队列；</p>
+<p>5. 方案切换规则：选「推荐/极限/无损」→ 参数锁定禁用；选「自定义」→ 参数解锁可编辑；手动改参数 → 自动切至「自定义」。</p>
+<p><strong>交互流程：</strong></p>
+<p>1. 仅 GLB 支持轻量化（手工模型和 BIM 数据后台自动转 GLB 后可操作），入口仅对可轻量化模型显示</p>
+<p>2. 选择处理方案（推荐/极限/无损参数禁用，自定义可编辑），设置参数后点击「轻量化模型」→ 弹窗提示任务已创建 → 进入 Loading 状态</p>
+<p>3. 任务完成后，右下角弹出处理报告，展示前后对比数据；可保存/下载/还原模型</p>
+<p>4. 已轻量化可再次轻量化，但不保证成功，可能失败原因是模型本身已经足够轻量了，再进行轻量化算法会报错</p>
+<hr class="section-divider">
+<h3 id="3-10-参数配准">3.10 参数配准</h3>
+<p><strong>对应原型文件：</strong> 参数配准.html</p>
+<p><strong>功能描述：</strong> 配置模型的坐标基点、旋转角度、偏移量，使模型准确叠加到三维地理场景。</p>
+<p><strong>页面结构：</strong></p>
+<ul>
+<li><strong>模型信息区：</strong> <code>模型名称</code> 送水泵房泵组 / <code>.rvt</code> 格式</li>
+<li><strong>参数设置区：</strong></li>
+</ul>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>参数区块</strong></th>
+<th><strong>标签</strong></th>
+<th><strong>独立恢复按钮</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>坐标基点</td>
+<td>坐标基点</td>
+<td>恢复</td>
+</tr>
+<tr>
+<td>旋转</td>
+<td>旋转</td>
+<td>恢复</td>
+</tr>
+<tr>
+<td>偏移量</td>
+<td>偏移量</td>
+<td>恢复</td>
+</tr>
+</tbody></table></div>
+<ul>
+<li><strong>底部：</strong> <code>保存</code>、<code>退出</code></li>
+</ul>
+<p><strong>交互流程：</strong></p>
+<p>1. 从我的模型库进入，页面回显模型名称和格式</p>
+<p>2. 分别设置三个参数，每个参数有独立"恢复"按钮恢复默认值</p>
+<p>3. 点击"保存"保存配置，"退出"返回我的模型库</p>
+<hr class="section-divider">
+<h3 id="3-11-模型服务">3.11 模型服务</h3>
+<p><strong>对应原型文件：</strong> 模型服务.html</p>
+<p><strong>功能描述：</strong> 管理已发布的模型服务（每个对应一个模型，对外提供 3Dtiles 接口），支持创建、启用/停用、编辑、删除、预览。</p>
+<p><strong>页面结构：</strong></p>
+<ul>
+<li><strong>顶部：</strong> <code>创建模型服务</code>、<code>批量删除</code>、<code>重置</code></li>
+<li><strong>表格：</strong></li>
+</ul>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>列名</strong></th>
+<th><strong>说明</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>模型服务名称</td>
+<td>服务名称</td>
+</tr>
+<tr>
+<td>模型名称</td>
+<td>关联源模型</td>
+</tr>
+<tr>
+<td>创建时间</td>
+<td>2025-01-01 14:00:00</td>
+</tr>
+<tr>
+<td>服务地址</td>
+<td><code>http://192.167.2.127:4225/distribution/model/...</code></td>
+</tr>
+<tr>
+<td>启用状态</td>
+<td>Switch 开关 On/Off</td>
+</tr>
+<tr>
+<td>操作</td>
+<td>编辑、删除、预览</td>
+</tr>
+</tbody></table></div>
+<ul>
+<li><strong>分页组件</strong></li>
+</ul>
+<p><strong>示例数据（8条）：</strong> 厂区倾斜摄影、送水泵组、斜管浓缩池、1#吸水井、1#出水管、送水泵房、排泥车、输水管道。6 个 Switch 为 On，1 个为 Off。</p>
+<p><strong>创建模型服务弹窗（3 状态）：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>状态</strong></th>
+<th><strong>内容</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>状态1</td>
+<td>标题 <code>创建模型服务</code>，输入 <code>模型服务名称</code>（placeholder: "请输入模型服务名称"），下拉 <code>请选择模型…</code>，按钮 <code>创建模型服务</code>/<code>取消</code></td>
+</tr>
+<tr>
+<td>状态2</td>
+<td>标题 <code>选择模型</code>，搜索框 + Search icon + Clear 按钮，模型列表（含选中标记），<code>已选择：送水泵房泵组</code> 回显，<code>确定</code>/<code>取消</code></td>
+</tr>
+<tr>
+<td>状态3</td>
+<td>回显已选模型名称，"已选择"状态标记</td>
+</tr>
+</tbody></table></div>
+<p><strong>业务规则说明：</strong></p>
+<p>1. 模型服务编辑，只能编辑模型服务名称</p>
+<p>2. 场景服务编辑，可以编辑场景服务名称、以及移除或添加模型服务</p>
+<p><strong>交互流程：</strong></p>
+<p>1. 点击"创建模型服务"→ 弹窗状态1 填写名称</p>
+<p>2. 点击"请选择模型…"→ 状态2 搜索/勾选模型 → "确定"回状态1</p>
+<p>3. 确认创建，Switch 控制启用/停用，编辑仅限改名称</p>
+<hr class="section-divider">
+<h3 id="3-12-场景服务">3.12 场景服务</h3>
+<p><strong>对应原型文件：</strong> 场景服务.html</p>
+<p><strong>功能描述：</strong> 管理场景服务，每个场景可包含多个模型服务，实现复合场景发布与管理。</p>
+<p><strong>页面结构：</strong></p>
+<ul>
+<li><strong>顶部：</strong> <code>创建场景服务</code>、<code>批量删除</code>、<code>重置</code></li>
+<li><strong>表格：</strong></li>
+</ul>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>列名</strong></th>
+<th><strong>说明</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>场景服务名称</td>
+<td>场景名称</td>
+</tr>
+<tr>
+<td>模型服务名称</td>
+<td>包含的模型服务（逗号分隔）</td>
+</tr>
+<tr>
+<td>创建时间</td>
+<td>2025-01-01 14:00:00</td>
+</tr>
+<tr>
+<td>服务地址</td>
+<td>URL</td>
+</tr>
+<tr>
+<td>启用状态</td>
+<td>Switch 开关</td>
+</tr>
+<tr>
+<td>操作</td>
+<td>编辑、删除、预览</td>
+</tr>
+</tbody></table></div>
+<ul>
+<li><strong>分页组件</strong></li>
+</ul>
+<p><strong>示例数据（7条）：</strong> 送水泵房场景（送水泵组）、厂区场景（厂区倾斜摄影1，厂区倾斜摄影2…）、原水泵房场景、斜管浓缩池场景（斜管浓缩池1，斜管浓缩池2）、某工艺段场景（1#出水管，2#出水管）</p>
+<p><strong>创建场景服务弹窗（3 状态）：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>状态</strong></th>
+<th><strong>内容</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>状态1</td>
+<td>标题 <code>创建场景服务</code>，标签 <code>模型服务选择</code>，输入 <code>场景服务名称</code>（placeholder: "请输入场景服务名称"），下拉 <code>请选择模型…</code>，<code>创建场景服务</code>/<code>取消</code></td>
+</tr>
+<tr>
+<td>状态2</td>
+<td>标题 <code>选择模型服务</code>，搜索 + icon + Clear，模型服务列表（多选），<code>已选择：</code> 回显，<code>确定</code>/<code>取消</code></td>
+</tr>
+<tr>
+<td>状态3</td>
+<td>回显已选模型服务列表，"已选择"状态</td>
+</tr>
+</tbody></table></div>
+<p><strong>编辑区别说明（同 3.11 底部）：</strong> 场景服务编辑可改名称+增删模型服务；模型服务编辑仅改名称。</p>
+<p><strong>交互流程：</strong></p>
+<p>1. 点击"创建场景服务"→ 状态1 填写名称</p>
+<p>2. 状态2 搜索/多选模型服务 → "确定"回状态1</p>
+<p>3. 确认创建，"模型服务名称"列逗号分隔展示，Switch 控制启用</p>
+<p>4. 编辑可改名称及增删模型服务</p>
+<hr class="section-divider">
+<h3 id="3-13-空间数据统计">3.13 空间数据统计</h3>
+<p><strong>对应原型文件：</strong> 空间数据统计.html</p>
+<p><strong>功能描述：</strong> 可视化展示空间数据统计信息，含统计指标卡片、多类图表和详细下载排行数据表格。页面为左侧导航菜单 + 右侧内容区的布局，左侧可切换"空间数据管理"和"空间数据服务"两个菜单组（原型中以蓝色选中态高亮当前页），右侧展示统计内容。</p>
+<p><strong>页面结构：</strong></p>
+<p><strong>顶部内容区 — 统计指标卡片（第一行，4 个）：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>卡片</strong></th>
+<th><strong>示例数值</strong></th>
+<th><strong>说明</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>源模型总数</td>
+<td>63个</td>
+<td>源模型管理列表中所有模型的数量</td>
+</tr>
+<tr>
+<td>模型库总数</td>
+<td>7个</td>
+<td>我的模型库中已添加的模型数量</td>
+</tr>
+<tr>
+<td>模型格式种类</td>
+<td>7类</td>
+<td>支持上传的 7 大类数据格式</td>
+</tr>
+<tr>
+<td>服务总数量</td>
+<td>70个</td>
+<td>模型服务 + 场景服务的总数量</td>
+</tr>
+</tbody></table></div>
+<blockquote>
+<p><strong>说明：</strong> 第一行 4 个卡片展示全局概览数据，数值来自后端统计数据接口，随筛选条件联动更新。原型中第一行只展示这 4 个卡片。</p>
+</blockquote>
+<p><strong>右侧内容区 — 图表区域（两列布局）：</strong></p>
+<p><strong>第一行（左列）：源模型类型占比统计</strong></p>
+<ul>
+<li>图表类型：环形图（Doughnut chart），中央显示"源模型总数 63个"</li>
+<li>数据分类及色块图例：BIM数据、倾斜摄影、手工模型、地形数据、激光点云</li>
+<li>鼠标 hover 扇区时展示该类型的具体数量及占比百分比</li>
+</ul>
+<p><strong>第一行（右列）：服务启用状态统计</strong></p>
+<ul>
+<li>展示形式：环形图 + 图例 + 数值卡片组合</li>
+<li>数据项：启用数量（绿色）、停用数量（红色）、服务总数量</li>
+<li>图例与数值对应，直观展示服务启停比例</li>
+</ul>
+<p><strong>第二行（左列）：任务处理时长统计</strong></p>
+<ul>
+<li>图表类型：柱状图，X 轴为时间段分组（如 0-5min、5-10min、10-15min、15以上），Y 轴为任务数量，单位 min</li>
+<li>数据由后端统计接口提供，中继器驱动柱体高度和网格线</li>
+<li>柱体可 hover 展示该时长区间的具体任务数量和占比</li>
+</ul>
+<p><strong>第二行（右列）：模型库格式数量统计</strong></p>
+<ul>
+<li>图表类型：雷达图（Radar chart），展示各格式（DEM、DXF、FBX、OBJ、GLB 等）在模型库中的数量分布</li>
+<li>每个维度轴对应一种格式，值越大越靠近外圈</li>
+<li>图例列出各格式名称及对应颜色</li>
+</ul>
+<p><strong>第三行（全宽）：服务调用量排行 & 模型下载次数排行（并排）</strong></p>
+<p><strong>左半区 — 服务调用量排行（表格）：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>列名</strong></th>
+<th><strong>说明</strong></th>
+<th><strong>示例值</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>模型名称</td>
+<td>被调用的模型</td>
+<td>送水泵房</td>
+</tr>
+<tr>
+<td>模型格式</td>
+<td>模型文件格式</td>
+<td>FBX</td>
+</tr>
+<tr>
+<td>下载次数</td>
+<td>累计下载次数</td>
+<td>—</td>
+</tr>
+<tr>
+<td>最近下载时间</td>
+<td>最近一次下载时间</td>
+<td>2025-01-01 13:00</td>
+</tr>
+<tr>
+<td>最近执行人</td>
+<td>最近一次执行下载的用户</td>
+<td>张三</td>
+</tr>
+</tbody></table></div>
+<blockquote>
+<p><strong>说明：</strong> 表格按下载次数降序排列，展示 TOP N 排行数据。原型示例中包含 6 行数据：送水泵房（FBX）、原水泵房（GLB）、沉淀池（OBJ）、送水泵房（RVT）、送水泵房（FBX）、送水泵房（FBX）。</p>
+</blockquote>
+<p><strong>右半区 — 模型下载次数排行（TOP5 排行榜）：</strong></p>
+<ul>
+<li>展示形式：竖向排行列表，每个条目展示排名徽章（TOP1~TOP5）+ 模型名称</li>
+<li>TOP1 条目放大突出显示，TOP2-5 依次排列</li>
+<li>原型示例数据：TOP1 送水泵房、TOP2 原水前池，TOP3-5 为后续排名模型</li>
+<li>点击右上方的下拉选项可以筛选全部、模型服务、场景服务</li>
+</ul>
+<p><strong>底部表格（全宽）：</strong></p>
+<ul>
+<li>详细统计数据表格，包含模型名称、模型格式、下载次数、最近下载时间、最近执行人、所属分类等列</li>
+<li>支持排序（列头点击切换升序/降序）</li>
+<li>支持分页，分页组件与统一样式一致：<code>共 N 条记录  第 X/Y 页   [页码]   跳至 [__] 页   [条/页▼]</code></li>
+<li>表格可与上方图表联动：点击图表中的分类/排行条目，底部表格自动筛选对应数据</li>
+</ul>
+<p><strong>交互规则：</strong></p>
+<ul>
+<li>所有图表数据来自后端统计接口，页面加载时一次性获取全部统计数据</li>
+<li>图表之间独立渲染，hover 展示详细数据 tooltip</li>
+<li>底部表格排序/分页仅影响表格自身，不影响上方图表</li>
+<li>图表联动（点击图表条目 → 表格筛选）为可选的增强交互，V1 版本可先不做</li>
+</ul>
+<hr class="section-divider">
+<h2 id="四-附录-模型格式支持矩阵">四、附录：模型格式支持矩阵</h2>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>数据分类</strong></th>
+<th><strong>支持上传格式</strong></th>
+<th><strong>支持预览格式</strong></th>
+<th><strong>可转换目标格式</strong></th>
+<th><strong>是否支持轻量化</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>BIM数据</td>
+<td>RVT、PLN、ZIP/RAR</td>
+<td>后台自动转 GLB 后预览</td>
+<td>GLB</td>
+<td>是（后台自动转 GLB 后）</td>
+</tr>
+<tr>
+<td>手工模型</td>
+<td>OBJ、FBX、STL、3DS、ZIP</td>
+<td>FBX、OBJ、GLB、STL可直接预览</td>
+<td>GLB</td>
+<td>是（后台自动转 GLB 后）</td>
+</tr>
+<tr>
+<td>倾斜摄影</td>
+<td>OSGB、ZIP、RAR</td>
+<td>后台自动转 3Dtiles 后预览</td>
+<td>3Dtiles</td>
+<td>否</td>
+</tr>
+<tr>
+<td>地形数据</td>
+<td>TIFF、DEM、ZIP</td>
+<td>后台自动转 Terrain 后预览</td>
+<td>Terrain</td>
+<td>否</td>
+</tr>
+<tr>
+<td>影像数据</td>
+<td>TIFF、ZIP</td>
+<td>后台自动转 PNG 数据集后预览</td>
+<td>PNG 数据集</td>
+<td>否</td>
+</tr>
+<tr>
+<td>点云数据</td>
+<td>PCD、PLY、TXT、LAS、ZIP</td>
+<td>后台自动转 3Dtiles 后预览</td>
+<td>3Dtiles</td>
+<td>否</td>
+</tr>
+<tr>
+<td>CAD数据</td>
+<td>DXF、DWG、DWF、DGN、ZIP</td>
+<td>DXF可直接预览，其他格式后台自动转 DXF 后预览</td>
+<td>DXF</td>
+<td>否</td>
+</tr>
+</tbody></table></div>
+<p><strong>关键限制：</strong></p>
+<ul>
+<li>GLB、DXF 不支持格式转换；已转换过的不能再次转换</li>
+<li>仅 GLB 格式才能进行轻量化，而手工模型和BIM数据可以支持轻量化，让后台自动处理转换为 GLB 格式就能轻量化了）</li>
+<li>轻量化过的模型再次轻量化可能会失败</li>
+</ul>
+
+  </div>
+</div>
+
+<button class="back-to-top" id="backToTop" title="回到顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', theme: 'neutral' });
+
+function toggleSection(header) {
+  header.classList.toggle('collapsed');
+  const items = header.nextElementSibling;
+  if (items) items.classList.toggle('collapsed');
+}
+
+const navLinks = document.querySelectorAll('.nav-items a');
+const sections = [];
+navLinks.forEach(link => {
+  const id = link.getAttribute('href').substring(1);
+  const el = document.getElementById(id);
+  if (el) sections.push({ el, link });
+});
+
+function updateActive() {
+  let current = sections[0];
+  const scrollY = window.scrollY + 120;
+  for (const s of sections) {
+    if (s.el.offsetTop <= scrollY) current = s;
+  }
+  navLinks.forEach(l => l.classList.remove('active'));
+  if (current) current.link.classList.add('active');
+}
+
+const backBtn = document.getElementById('backToTop');
+function toggleBackBtn() { backBtn.classList.toggle('visible', window.scrollY > 400); }
+
+window.addEventListener('scroll', () => { updateActive(); toggleBackBtn(); });
+updat
