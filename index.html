@@ -141,6 +141,33 @@ hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
 /* ── Mermaid ── */
 .mermaid-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 6px; padding: 24px; margin-bottom: 24px; overflow-x: auto; }
 .mermaid-wrap .mermaid { display: flex; justify-content: center; }
+/* Mermaid 子图深色背景 + 浅色连接线 */
+.mermaid svg .cluster rect {
+  stroke-width: 2 !important;
+  fill: #1e293b !important;
+  stroke: #475569 !important;
+}
+.mermaid svg .cluster text,
+.mermaid svg .cluster span {
+  fill: #e2e8f0 !important;
+  color: #e2e8f0 !important;
+}
+/* 连接线与箭头改为浅色 */
+.mermaid svg .edgePath path,
+.mermaid svg .flowchart-link {
+  stroke: #cbd5e1 !important;
+}
+.mermaid svg marker path,
+.mermaid svg .marker {
+  fill: #cbd5e1 !important;
+  stroke: #cbd5e1 !important;
+}
+/* 子图内节点保持白底深色边框，与深色背景形成对比 */
+.mermaid svg .node rect,
+.mermaid svg .node polygon,
+.mermaid svg .node path {
+  stroke-width: 2.5 !important;
+}
 
 /* ── Lists ── */
 .content ul, .content ol { margin-bottom: 20px; padding-left: 24px; }
@@ -336,25 +363,36 @@ hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
 <div class="mermaid-wrap"><pre class="mermaid">
 flowchart TD
     A[用户登录] --&gt; B[源模型管理]
-    B --&gt; C[模型上传]
-    C --&gt; D[模型检测]
-    D --&gt;|检测通过| B
-    D --&gt;|检测不通过| C
-    B --&gt;|格式转换| E[任务管理]
-    B --&gt;|轻量化| E
-    B --&gt;|添加至模型库| F[我的模型库]
-    E --&gt;|转换/轻量化成功| F
-    F --&gt; G[预览查看]
-    F --&gt; H[参数配准]
-    F --&gt;|格式转换| E
-    F --&gt;|轻量化| E
-    F --&gt; I[发布模型服务]
+
+    subgraph 数据接入
+      C[模型上传]
+      D[模型检测]
+      B --&gt; C --&gt; D
+      D -- 检测通过 --&gt; B
+      D -- 检测不通过 --&gt; C
+    end
+
+    B -- 格式转换 / 轻量化 --&gt; E[任务管理]
+    B -- 添加至模型库 --&gt; F[我的模型库]
+    E -- 转换/轻量化成功 --&gt; F
+
+    subgraph 模型库操作
+      G[预览查看]
+      H[参数配准]
+      I[发布模型服务]
+      F --&gt; G
+      F --&gt; H
+      F --&gt; I
+    end
+
     I --&gt; J[模型服务]
     J --&gt; K[场景服务]
-    B --&gt; L[空间数据统计]
-    F --&gt; L
-    J --&gt; L
-    K --&gt; L
+
+    L[空间数据统计]
+    B -. 统计汇总 .-&gt; L
+    F -. 统计汇总 .-&gt; L
+    J -. 统计汇总 .-&gt; L
+    K -. 统计汇总 .-&gt; L
 </pre></div>
 <p><strong>核心业务路径：</strong></p>
 <p>1. 模型上传与检测：登录 → 源模型管理 → 模型上传（7 类入口）→ 模型检测（自动触发）→ 检测通过回到源模型管理列表</p>
@@ -1819,7 +1857,24 @@ flowchart TD
 <button class="back-to-top" id="backToTop" title="回到顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <script>
-mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', theme: 'neutral' });
+mermaid.initialize({ startOnLoad: true, securityLevel: 'loose', theme: 'base',
+  themeVariables: {
+    fontSize: '18px',
+    fontFamily: '-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif',
+    primaryColor: '#ffffff',
+    primaryTextColor: '#1c1917',
+    primaryBorderColor: '#1e4fd8',
+    lineColor: '#cbd5e1',
+    secondaryColor: '#1e293b',
+    tertiaryColor: '#1e293b',
+    edgeLabelBackground: '#334155',
+    nodeBorder: '#1e4fd8',
+    clusterBkg: '#1e293b',
+    clusterBorder: '#475569',
+    titleColor: '#1c1917'
+  },
+  flowchart: { useMaxWidth: false, htmlLabels: true, nodeSpacing: 60, rankSpacing: 80, curve: 'basis' }
+});
 
 function toggleSection(header) {
   header.classList.toggle('collapsed');
