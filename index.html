@@ -73,6 +73,10 @@ body {
 }
 .nav-items a:hover { color: #e5e7eb; background: var(--sidebar-hover); }
 .nav-items a.active { color: var(--sidebar-active); background: #1e3a5f33; border-left-color: var(--accent); }
+/* 树形层级缩进（字号与整体侧边栏一致，仅用缩进表达层级） */
+.nav-items a.lvl-0 { padding-left: 20px; font-weight: 600; }
+.nav-items a.lvl-1 { padding-left: 40px; }
+.nav-items a.lvl-2 { padding-left: 60px; }
 .sidebar-footer { padding: 16px 20px; border-top: 1px solid #1f2937; font-size: 11px; color: #4b5563; }
 
 /* ── Main ── */
@@ -241,19 +245,19 @@ hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
           <span class="arrow">▼</span> 三、各功能模块详细说明
         </div>
         <ul class="nav-items">
-          <li><a href="#3-1-登录页">3.1 登录页</a></li>
-          <li><a href="#3-2-源模型管理">3.2 源模型管理</a></li>
-          <li><a href="#3-3-模型上传">3.3 模型上传</a></li>
-          <li><a href="#3-4-模型检测">3.4 模型检测</a></li>
-          <li><a href="#3-5-任务管理">3.5 任务管理</a></li>
-          <li><a href="#3-6-我的模型库">3.6 我的模型库</a></li>
-          <li><a href="#3-7-预览查看">3.7 预览查看</a></li>
-          <li><a href="#3-8-格式转换">3.8 格式转换</a></li>
-          <li><a href="#3-9-轻量化">3.9 轻量化</a></li>
-          <li><a href="#3-10-参数配准">3.10 参数配准</a></li>
-          <li><a href="#3-11-模型服务">3.11 模型服务</a></li>
-          <li><a href="#3-12-场景服务">3.12 场景服务</a></li>
-          <li><a href="#3-13-空间数据统计">3.13 空间数据统计</a></li>
+          <li><a class="lvl-0" href="#3-1-登录页">3.1 登录页</a></li>
+          <li><a class="lvl-1" href="#3-2-源模型管理">3.2 源模型管理</a></li>
+          <li><a class="lvl-2" href="#3-3-模型上传">3.3 模型上传</a></li>
+          <li><a class="lvl-2" href="#3-4-模型检测">3.4 模型检测</a></li>
+          <li><a class="lvl-2" href="#3-8-格式转换">3.8 格式转换</a></li>
+          <li><a class="lvl-2" href="#3-9-轻量化">3.9 轻量化</a></li>
+          <li><a class="lvl-1" href="#3-5-任务管理">3.5 任务管理</a></li>
+          <li><a class="lvl-1" href="#3-6-我的模型库">3.6 我的模型库</a></li>
+          <li><a class="lvl-2" href="#3-7-预览查看">3.7 预览查看</a></li>
+          <li><a class="lvl-2" href="#3-10-参数配准">3.10 参数配准</a></li>
+          <li><a class="lvl-1" href="#3-11-模型服务">3.11 模型服务</a></li>
+          <li><a class="lvl-1" href="#3-12-场景服务">3.12 场景服务</a></li>
+          <li><a class="lvl-0" href="#3-13-空间数据统计">3.13 空间数据统计</a></li>
         </ul>
       </div>
       <div class="nav-section">
@@ -265,7 +269,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
         </ul>
       </div>
   </div>
-  <div class="sidebar-footer">V1.2 · 2026.07.16</div>
+  <div class="sidebar-footer">V1.3 · 2026.07.27</div>
 </nav>
 
 <div class="main">
@@ -274,7 +278,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
       <div class="header-dot"></div>
       <span class="header-title">空间数据管理中心 PRD</span>
     </div>
-    <span class="header-version">V1.2</span>
+    <span class="header-version">V1.3</span>
   </header>
 
   <div class="content">
@@ -283,8 +287,8 @@ hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
     <div class="page-intro">
       <p style="margin-bottom:0;color:var(--text-muted);font-size:14px;">三维空间数据的统一接入、管理、处理、服务发布与统计分析平台，为上层数字孪生可视化平台提供数据支撑。</p>
       <div class="page-intro-meta">
-        <span><span class="label">版本</span> V1.2</span>
-        <span><span class="label">更新日期</span> 2026.07.16</span>
+        <span><span class="label">版本</span> V1.3</span>
+        <span><span class="label">更新日期</span> 2026.07.27</span>
         <span><span class="label">文档类型</span> 产品需求文档</span>
       </div>
     </div>
@@ -309,6 +313,11 @@ hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
 <td>V1.2</td>
 <td>1、轻量化：参数设置交互完善（预定义方案参数禁用、自定义方案可编辑）、增加处理方案说明与交互注释<br>2、任务管理：任务状态驱动按钮状态与样式，已添加至模型库不可重复添加<br>3、我的模型库：增加轻量化按钮<br>4、模型检测：删除格式不符情况，Revit版本问题提示改为导出IFC再重新上传<br>5、源模型管理：点击【添加至模型库】增加loading状态</td>
 <td>2026.07.16</td>
+</tr>
+<tr>
+<td>V1.3</td>
+<td>1、模型上传：仅OSGB（倾斜摄影）上传压缩包，其余格式仅支持上传各自格式单文件<br>2、模型检测、源模型管理：新增一种检测不通过情况——OSGB压缩包内文件格式不对（可能原因显示"格式不符"）<br>3、任务管理：新增任务名称字段，默认与模型名称一致，重名时自动追加递增序号<br>4、任务管理：格式转换任务参数仅保留模型格式、模型大小，轻量化任务参数不变<br>5、任务管理：删除任务记录仅删除该条记录，不影响已添加至模型库的模型<br>6、源模型管理：区分【添加至模型库】后台被动转换（无可见任务）与【格式转换】主动任务（生成可见任务）<br>7、我的模型库：明确模型处理字段含义（添加至模型库→未处理、格式转换→格式转换、轻量化→轻量化）</td>
+<td>2026.07.27</td>
 </tr>
 </tbody></table></div>
 <hr class="section-divider">
@@ -662,7 +671,7 @@ flowchart TD
 <tr>
 <td>可能原因</td>
 <td>hover"可能原因"图标</td>
-<td>显示<span class="tag tag-red">失败</span>原因文案：Revit版本不支持。<span class="tag tag-red">检测不通过</span>情况：RVT 的 Revit 版本在 2021 之后</td>
+<td>显示<span class="tag tag-red">失败</span>原因文案。<span class="tag tag-red">检测不通过</span>情况：①Revit版本不支持——RVT 的 Revit 版本在 2021 之后；②格式不符——OSGB 压缩包内检测到文件格式不对</td>
 </tr>
 <tr>
 <td>添加至模型库成功提示</td>
@@ -680,10 +689,11 @@ flowchart TD
 <p>2. 检测通过 → 状态变为"上传成功"，状态列展示绿色圆点，可执行格式转换、轻量化或添加至模型库</p>
 <p>3. 源模型管理页面不能直接预览——需先执行格式转换生成任务后预览，或"添加至模型库"后通过我的模型库预览</p>
 <p>4. 点击"添加至模型库"→ 按钮先进入 loading 加载状态（显示加载动画，按钮暂时不可点击），待后端返回成功后，按钮变为"查看"（点击可跳转预览查看），同时弹出成功提示弹窗</p>
-<p>5. 检测不通过 → 状态列展示红色圆点，hover"可能原因"图标查看提示，点击"重新上传"重新选择文件</p>
-<p>6. 格式转换限制：GLB 和 DXF 不支持格式转换；已转换过的模型不能再次转换</p>
-<p>7. 轻量化限制：仅 GLB 可轻量化（手工模型和 BIM 数据后台自动转 GLB 后也支持），已轻量化的可再次轻量化但不保证成功</p>
-<p>8. 表格列表支持多选勾选，配合"批量下载"、"批量删除"按钮使用；勾选后按钮从禁用态变为可用态</p>
+<p>5. 【添加至模型库】与【格式转换】的任务区别：<br>• 点击【添加至模型库】：由后台被动将模型转换为可预览格式，转换过程在不可见的后台文件夹中进行，<strong>不在【任务管理】中生成可见任务</strong>；<br>• 点击【格式转换】：为用户主动发起的任务，<strong>需在【任务管理】中生成一条可见任务</strong>，供跟踪进度与结果</p>
+<p>6. 检测不通过 → 状态列展示红色圆点，hover"可能原因"图标查看提示，点击"重新上传"重新选择文件</p>
+<p>7. 格式转换限制：GLB 和 DXF 不支持格式转换；已转换过的模型不能再次转换</p>
+<p>8. 轻量化限制：仅 GLB 可轻量化（手工模型和 BIM 数据后台自动转 GLB 后也支持），已轻量化的可再次轻量化但不保证成功</p>
+<p>9. 表格列表支持多选勾选，配合"批量下载"、"批量删除"按钮使用；勾选后按钮从禁用态变为可用态</p>
 <hr class="section-divider">
 <h3 id="3-3-模型上传">3.3 模型上传</h3>
 <p><strong>对应原型文件：</strong> 模型上传.html</p>
@@ -701,43 +711,43 @@ flowchart TD
 <tr>
 <td>BIM数据</td>
 <td>上传BIM数据</td>
-<td>RVT、PLN，允许 ZIP/RAR，RVT 仅限 Revit2021 及更早版本</td>
+<td>RVT、PLN 单文件（不支持压缩包），RVT 仅限 Revit2021 及更早版本</td>
 <td>≤500M</td>
 </tr>
 <tr>
 <td>手工模型</td>
 <td>上传手工模型</td>
-<td>OBJ、FBX、STL、3DS，允许 ZIP/RAR</td>
+<td>OBJ、FBX、STL、3DS 单文件（不支持压缩包）</td>
 <td>≤500M</td>
 </tr>
 <tr>
 <td>倾斜摄影</td>
 <td>上传倾斜摄影</td>
-<td>ZIP、RAR 压缩包</td>
+<td>OSGB，需打包为 ZIP/RAR 压缩包上传（唯一支持压缩包的格式）</td>
 <td>≤10G</td>
 </tr>
 <tr>
 <td>地形数据</td>
 <td>上传地形数据</td>
-<td>TIFF、DEM，允许 ZIP/RAR</td>
+<td>TIFF、DEM 单文件（不支持压缩包）</td>
 <td>≤500M</td>
 </tr>
 <tr>
 <td>影像数据</td>
 <td>上传影像数据</td>
-<td>TIFF，允许 ZIP/RAR</td>
+<td>TIFF 单文件（不支持压缩包）</td>
 <td>≤500M</td>
 </tr>
 <tr>
 <td>点云数据</td>
 <td>上传点云数据</td>
-<td>PCD、PLY、TXT、LAS，允许 ZIP/RAR</td>
+<td>PCD、PLY、TXT、LAS 单文件（不支持压缩包）</td>
 <td>≤500M</td>
 </tr>
 <tr>
 <td>CAD数据</td>
 <td>上传CAD数据</td>
-<td>DXF、DWG、DWF、DGN，允许 ZIP/RAR</td>
+<td>DXF、DWG、DWF、DGN 单文件（不支持压缩包）</td>
 <td>≤500M</td>
 </tr>
 </tbody></table></div>
@@ -746,7 +756,7 @@ flowchart TD
 <li><strong>上传流程：</strong></li>
 </ul>
 <p>1. 用户在初始无数据标签下，左侧点击分类标签，右侧面板切换展示对应分类的格式说明和大小限制</p>
-<p>2. 点击"上传[分类名]"按钮 → 系统弹出系统文件选择窗口（由浏览器/操作系统原生提供），文件选择过滤器仅展示该分类支持的格式（含 ZIP/RAR 压缩包）</p>
+<p>2. 点击"上传[分类名]"按钮 → 系统弹出系统文件选择窗口（由浏览器/操作系统原生提供），文件选择过滤器仅展示该分类支持的格式；仅倾斜摄影分类接受 ZIP/RAR 压缩包（内含 OSGB），其余分类只接受各自格式的单文件</p>
 <p>3. 用户选择文件并确认后，上传开始——此时：</p>
 <ul>
 <li>文件开始上传至后端，上传进度可展示在按钮区域（如按钮文案变为"上传中…"并置灰禁用，避免重复点击）</li>
@@ -761,7 +771,7 @@ flowchart TD
 <hr class="section-divider">
 <h3 id="3-4-模型检测">3.4 模型检测</h3>
 <p><strong>对应原型文件：</strong> 模型检测.html</p>
-<p><strong>功能描述：</strong> 上传完成后自动触发的检测流程，验证文件大小合规性、可读性。RVT 额外判断 Revit 版本是否超过 2021。</p>
+<p><strong>功能描述：</strong> 上传完成后自动触发的检测流程，验证文件大小合规性、可读性。RVT 额外判断 Revit 版本是否超过 2021；OSGB 压缩包额外校验包内文件格式是否正确。</p>
 <p><strong>页面结构：</strong></p>
 <ul>
 <li><strong>进度阶段标题：</strong> <code>上传模型</code> / <code>检测中</code> / <code>检测通过</code></li>
@@ -788,14 +798,14 @@ flowchart TD
 <p><strong>状态3 — 检测不通过：</strong></p>
 <ul>
 <li>文案：<code>您此次上传的模型名称为 测试，格式为 DEM，大小为 23.39 MB</code></li>
-<li>失败原因：<code>Revit2021 以上高版本，请导出 IFC 格式后重新上传</code></li>
+<li>失败原因（按实际情况显示其一）：<code>Revit2021 以上高版本，请导出 IFC 格式后重新上传</code> / <code>格式不符：OSGB 压缩包内文件格式不对，请检查后重新上传</code></li>
 <li>子文案：<code>模型检测不通过</code></li>
 <li>按钮：<code>完成</code></li>
 </ul>
 <p><strong>交互流程：</strong></p>
 <p>1. 上传后自动触发检测，状态变为"检测中"</p>
 <p>2. 检测通过 → 弹窗含绿色图标 → 点击"完成" → 状态更新为"上传成功"</p>
-<p>3. 检测不通过 → 弹窗显示 Revit 版本原因（Revit2021 以上高版本，请导出 IFC 格式后重新上传）→ 点击"完成" → 状态更新为"检测不通过"，可在源模型管理中查看详情或重新上传</p>
+<p>3. 检测不通过 → 弹窗显示失败原因（Revit2021 以上高版本请导出 IFC 后重新上传；或 OSGB 压缩包内格式不符）→ 点击"完成" → 状态更新为"检测不通过"，可在源模型管理中查看详情或重新上传</p>
 <hr class="section-divider">
 <h3 id="3-5-任务管理">3.5 任务管理</h3>
 <p><strong>对应原型文件：</strong> 任务管理.html</p>
@@ -811,6 +821,11 @@ flowchart TD
 <th><strong>说明</strong></th>
 <th><strong>示例值</strong></th>
 </tr></thead><tbody>
+<tr>
+<td>任务名称</td>
+<td>默认与所处理的模型名称一致；若命名重复，则在名称后自动追加序号（如"送水泵房泵组"、"送水泵房泵组1"、"送水泵房泵组2"…）</td>
+<td>送水泵房泵组</td>
+</tr>
 <tr>
 <td>任务类型</td>
 <td>格式转换 / 轻量化</td>
@@ -873,6 +888,23 @@ flowchart TD
 <p>* 「预览」按钮在任务「已完成」时白色可用；「失败」或「进行中」时灰色禁用。</p>
 <p>* 「可能原因」图标仅在任务「失败」时显示，hover 展示后端返回的报错内容。</p>
 </blockquote>
+<p><strong>格式转换任务参数（转换成功后展示）：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>参数</strong></th>
+<th><strong>示例值</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>模型格式</td>
+<td>GLB</td>
+</tr>
+<tr>
+<td>模型大小</td>
+<td>0.21MB</td>
+</tr>
+</tbody></table></div>
+<blockquote>
+<p><strong>说明：</strong> 格式转换任务仅展示模型格式、模型大小两项参数，不展示模型面数、顶点数量。</p>
+</blockquote>
 <p><strong>轻量化任务对比详情（仅轻量化成功后展示）：</strong></p>
 <div class="table-wrap"><table><thead><tr>
 <th><strong>指标</strong></th>
@@ -918,6 +950,7 @@ flowchart TD
 <p>3. 失败时出现"可能原因"图标，hover图标展示后端返回的报错内容；预览和添加至模型库按钮灰色禁用</p>
 <p>4. 可单个或批量将成功结果"添加至模型库"，可"预览"查看结果</p>
 <p>5. 添加至模型库后，按钮变为绿色禁用状态"已添加至模型库"，不可重复添加</p>
+<p>6. 删除任务：删除某条任务记录（无论是否已添加至模型库）仅删除该条任务记录本身，与模型无关，不会删除该任务对应的模型；已添加至模型库的模型仍保留在我的模型库中</p>
 <hr class="section-divider">
 <h3 id="3-6-我的模型库">3.6 我的模型库</h3>
 <p><strong>对应原型文件：</strong> 我的模型库.html、发布服务.html</p>
@@ -953,7 +986,7 @@ flowchart TD
 </tr>
 <tr>
 <td>模型处理</td>
-<td>未处理 / 格式转换 / 轻量化</td>
+<td>未处理 / 格式转换 / 轻量化，取值取决于用户在【源模型管理】中对该模型执行的操作（详见业务规则说明）</td>
 </tr>
 <tr>
 <td>操作</td>
@@ -1014,6 +1047,7 @@ flowchart TD
 <p><strong>业务规则说明：</strong></p>
 <p>1. 一个模型可以发布为一个【模型服务】，模型服务名称默认为模型名称，支持修改</p>
 <p>2. 一个【场景服务】包含多个【模型服务】，新建一个场景服务，添加多个模型服务，发布成场景服务，名称可自定义</p>
+<p>3. 「模型处理」字段含义：该字段记录用户在【源模型管理】中对模型执行的操作——<br>• 点击【添加至模型库】→ 模型处理字段为「未处理」；<br>• 点击【格式转换】→ 模型处理字段为「格式转换」；<br>• 点击【轻量化】→ 模型处理字段为「轻量化」</p>
 <p><strong>交互流程：</strong></p>
 <p>1. 模型从源模型管理或任务管理添加至模型库，处理状态初始为"未处理"</p>
 <p>2. 点击"发布服务"→ 弹窗回显模型名称，服务名称可修改 → 确认发布</p>
@@ -1796,49 +1830,49 @@ flowchart TD
 </tr></thead><tbody>
 <tr>
 <td>BIM数据</td>
-<td>RVT、PLN、ZIP/RAR</td>
+<td>RVT、PLN（单文件）</td>
 <td>后台自动转 GLB 后预览</td>
 <td>GLB</td>
 <td>是（后台自动转 GLB 后）</td>
 </tr>
 <tr>
 <td>手工模型</td>
-<td>OBJ、FBX、STL、3DS、ZIP</td>
+<td>OBJ、FBX、STL、3DS（单文件）</td>
 <td>FBX、OBJ、GLB、STL可直接预览</td>
 <td>GLB</td>
 <td>是（后台自动转 GLB 后）</td>
 </tr>
 <tr>
 <td>倾斜摄影</td>
-<td>OSGB、ZIP、RAR</td>
+<td>OSGB（ZIP/RAR 压缩包，唯一压缩包上传格式）</td>
 <td>后台自动转 3Dtiles 后预览</td>
 <td>3Dtiles</td>
 <td>否</td>
 </tr>
 <tr>
 <td>地形数据</td>
-<td>TIFF、DEM、ZIP</td>
+<td>TIFF、DEM（单文件）</td>
 <td>后台自动转 Terrain 后预览</td>
 <td>Terrain</td>
 <td>否</td>
 </tr>
 <tr>
 <td>影像数据</td>
-<td>TIFF、ZIP</td>
+<td>TIFF（单文件）</td>
 <td>后台自动转 PNG 数据集后预览</td>
 <td>PNG 数据集</td>
 <td>否</td>
 </tr>
 <tr>
 <td>点云数据</td>
-<td>PCD、PLY、TXT、LAS、ZIP</td>
+<td>PCD、PLY、TXT、LAS（单文件）</td>
 <td>后台自动转 3Dtiles 后预览</td>
 <td>3Dtiles</td>
 <td>否</td>
 </tr>
 <tr>
 <td>CAD数据</td>
-<td>DXF、DWG、DWF、DGN、ZIP</td>
+<td>DXF、DWG、DWF、DGN（单文件）</td>
 <td>DXF可直接预览，其他格式后台自动转 DXF 后预览</td>
 <td>DXF</td>
 <td>否</td>
@@ -1903,5 +1937,23 @@ function updateActive() {
 const backBtn = document.getElementById('backToTop');
 function toggleBackBtn() { backBtn.classList.toggle('visible', window.scrollY > 400); }
 
-window.addEventListener('scroll', () => { updateActive(); toggleBackBtn(); });
-updat
+window.addEventListener('scroll', () => { if (!clickLock) updateActive(); toggleBackBtn(); });
+
+// 点击侧边栏标题即高亮为选中态
+let clickLock = false;
+navLinks.forEach(link => {
+  link.addEventListener('click', () => {
+    navLinks.forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+    // 点击后短暂锁定滚动高亮，避免锚点跳转时被 updateActive 覆盖
+    clickLock = true;
+    setTimeout(() => { clickLock = false; }, 700);
+  });
+});
+
+updateActive();
+toggleBackBtn();
+</script>
+
+</body>
+</html>
