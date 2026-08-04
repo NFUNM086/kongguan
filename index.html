@@ -245,19 +245,18 @@ hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
           <span class="arrow">▼</span> 三、各功能模块详细说明
         </div>
         <ul class="nav-items">
-          <li><a class="lvl-0" href="#3-1-登录页">3.1 登录页</a></li>
-          <li><a class="lvl-1" href="#3-2-源模型管理">3.2 源模型管理</a></li>
-          <li><a class="lvl-2" href="#3-3-模型上传">3.3 模型上传</a></li>
-          <li><a class="lvl-2" href="#3-4-模型检测">3.4 模型检测</a></li>
-          <li><a class="lvl-2" href="#3-8-格式转换">3.8 格式转换</a></li>
-          <li><a class="lvl-2" href="#3-9-轻量化">3.9 轻量化</a></li>
-          <li><a class="lvl-1" href="#3-5-任务管理">3.5 任务管理</a></li>
-          <li><a class="lvl-1" href="#3-6-我的模型库">3.6 我的模型库</a></li>
-          <li><a class="lvl-2" href="#3-7-预览查看">3.7 预览查看</a></li>
-          <li><a class="lvl-2" href="#3-10-参数配准">3.10 参数配准</a></li>
-          <li><a class="lvl-1" href="#3-11-模型服务">3.11 模型服务</a></li>
-          <li><a class="lvl-1" href="#3-12-场景服务">3.12 场景服务</a></li>
-          <li><a class="lvl-0" href="#3-13-空间数据统计">3.13 空间数据统计</a></li>
+          <li><a href="#3-1-登录页">3.1 登录页</a></li>
+          <li><a href="#3-2-源模型管理">3.2 源模型管理</a></li>
+          <li><a class="lvl-2" href="#3-2-1-模型上传">3.2.1 模型上传</a></li>
+          <li><a class="lvl-2" href="#3-2-2-模型检测">3.2.2 模型检测</a></li>
+          <li><a class="lvl-2" href="#3-2-3-格式转换">3.2.3 格式转换</a></li>
+          <li><a class="lvl-2" href="#3-2-4-轻量化">3.2.4 轻量化</a></li>
+          <li><a href="#3-3-任务管理">3.3 任务管理</a></li>
+          <li><a href="#3-4-我的模型库">3.4 我的模型库</a></li>
+          <li><a class="lvl-2" href="#3-4-1-预览查看">3.4.1 预览查看</a></li>
+          <li><a class="lvl-2" href="#3-4-2-参数配准">3.4.2 参数配准</a></li>
+          <li><a href="#3-5-场景服务">3.5 场景服务</a></li>
+          <li><a href="#3-6-空间数据统计">3.6 空间数据统计</a></li>
         </ul>
       </div>
       <div class="nav-section">
@@ -269,7 +268,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
         </ul>
       </div>
   </div>
-  <div class="sidebar-footer">V1.3 · 2026.07.27</div>
+  <div class="sidebar-footer">V1.4 · 2026.08.04</div>
 </nav>
 
 <div class="main">
@@ -278,7 +277,7 @@ hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
       <div class="header-dot"></div>
       <span class="header-title">空间数据管理中心 PRD</span>
     </div>
-    <span class="header-version">V1.3</span>
+    <span class="header-version">V1.4</span>
   </header>
 
   <div class="content">
@@ -287,8 +286,8 @@ hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
     <div class="page-intro">
       <p style="margin-bottom:0;color:var(--text-muted);font-size:14px;">三维空间数据的统一接入、管理、处理、服务发布与统计分析平台，为上层数字孪生可视化平台提供数据支撑。</p>
       <div class="page-intro-meta">
-        <span><span class="label">版本</span> V1.3</span>
-        <span><span class="label">更新日期</span> 2026.07.27</span>
+        <span><span class="label">版本</span> V1.4</span>
+        <span><span class="label">更新日期</span> 2026.08.04</span>
         <span><span class="label">文档类型</span> 产品需求文档</span>
       </div>
     </div>
@@ -318,6 +317,11 @@ hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
 <td>V1.3</td>
 <td>1、模型上传：仅OSGB（倾斜摄影）上传压缩包，其余格式仅支持上传各自格式单文件<br>2、模型检测、源模型管理：新增一种检测不通过情况——OSGB压缩包内文件格式不对（可能原因显示"格式不符"）<br>3、任务管理：新增任务名称字段，默认与模型名称一致，重名时自动追加递增序号<br>4、任务管理：格式转换任务参数仅保留模型格式、模型大小，轻量化任务参数不变<br>5、任务管理：删除任务记录仅删除该条记录，不影响已添加至模型库的模型<br>6、源模型管理：区分【添加至模型库】后台被动转换（无可见任务）与【格式转换】主动任务（生成可见任务）<br>7、我的模型库：明确模型处理字段含义（添加至模型库→未处理、格式转换→格式转换、轻量化→轻量化）</td>
 <td>2026.07.27</td>
+</tr>
+<tr>
+<td>V1.4</td>
+<td>1、空间数据服务：模型服务、场景服务合并为场景服务，创建场景服务可绑定多个模型（模型来源我的模型库）<br>2、场景服务编辑：弹窗可修改场景服务名称、模型名称、启用状态，服务地址只可复制不可修改<br>3、场景服务：启用状态为禁用时，预览按钮禁用置灰<br>4、我的模型库：删除模型时校验是否绑定场景服务，有绑定则不可删除并提示</td>
+<td>2026.08.04</td>
 </tr>
 </tbody></table></div>
 <hr class="section-divider">
@@ -350,9 +354,8 @@ hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
  └── 空间数据管理
       ├── 源模型管理（含模型上传、模型检测）
       ├── 任务管理（含格式转换任务、轻量化任务）
-      └── 我的模型库（含预览查看、参数配准、格式转换、轻量化、发布服务）
+      └── 我的模型库（含预览查看、参数配准、格式转换、轻量化）
       ├── 空间数据服务
-      │    ├── 模型服务
       │    └── 场景服务
       └── 空间数据统计
 </code></pre>
@@ -363,7 +366,6 @@ hr { border: none; border-top: 1px solid var(--border); margin: 48px 0; }
 <li>任务管理（二级）</li>
 <li>我的模型库（二级）</li>
 <li><strong>空间数据服务</strong>（一级）</li>
-<li>模型服务（二级）</li>
 <li>场景服务（二级）</li>
 <li><strong>空间数据统计</strong>（一级）</li>
 </ul>
@@ -388,25 +390,21 @@ flowchart TD
     subgraph 模型库操作
       G[预览查看]
       H[参数配准]
-      I[发布模型服务]
       F --&gt; G
       F --&gt; H
-      F --&gt; I
     end
 
-    I --&gt; J[模型服务]
-    J --&gt; K[场景服务]
+    F -- 绑定模型 --&gt; K[场景服务]
 
     L[空间数据统计]
     B -. 统计汇总 .-&gt; L
     F -. 统计汇总 .-&gt; L
-    J -. 统计汇总 .-&gt; L
     K -. 统计汇总 .-&gt; L
 </pre></div>
 <p><strong>核心业务路径：</strong></p>
 <p>1. 模型上传与检测：登录 → 源模型管理 → 模型上传（7 类入口）→ 模型检测（自动触发）→ 检测通过回到源模型管理列表</p>
 <p>2. 格式转换与轻量化：源模型管理或我的模型库 → 提交任务 → 任务管理监控进度 → 处理完成可添加至我的模型库</p>
-<p>3. 服务发布：我的模型库 → 发布模型服务 → 模型服务管理 → 多个模型服务组合为场景服务</p>
+<p>3. 场景服务：我的模型库 → 场景服务 → 创建场景服务并绑定多个模型（模型来源我的模型库）</p>
 <p>4. 预览：源模型管理需先"添加至模型库"后预览，或先执行格式转换生成任务后预览</p>
 <hr class="section-divider">
 <h2 id="三-各功能模块详细说明">三、各功能模块详细说明</h2>
@@ -695,7 +693,7 @@ flowchart TD
 <p>8. 轻量化限制：仅 GLB 可轻量化（手工模型和 BIM 数据后台自动转 GLB 后也支持），已轻量化的可再次轻量化但不保证成功</p>
 <p>9. 表格列表支持多选勾选，配合"批量下载"、"批量删除"按钮使用；勾选后按钮从禁用态变为可用态</p>
 <hr class="section-divider">
-<h3 id="3-3-模型上传">3.3 模型上传</h3>
+<h3 id="3-2-1-模型上传">3.2.1 模型上传</h3>
 <p><strong>对应原型文件：</strong> 模型上传.html</p>
 <p><strong>功能描述：</strong> 三维模型上传入口，按数据类型分为 7 个入口，各有不同的格式支持和大小限制。上传完成后自动触发模型检测流程，模型同时出现在源模型管理列表中。</p>
 <p><strong>页面结构：</strong></p>
@@ -760,7 +758,7 @@ flowchart TD
 <p>3. 用户选择文件并确认后，上传开始——此时：</p>
 <ul>
 <li>文件开始上传至后端，上传进度可展示在按钮区域（如按钮文案变为"上传中…"并置灰禁用，避免重复点击）</li>
-<li>上传完成后自动触发模型检测流程（详见 3.4）</li>
+<li>上传完成后自动触发模型检测流程（详见 3.2.2）</li>
 <li>模型同时出现在"已有数据"标签页的表格和源模型管理列表中</li>
 </ul>
 <p>4. 上传前的客户端校验：</p>
@@ -769,7 +767,7 @@ flowchart TD
 <li>文件格式：若文件扩展名不在该分类支持的格式列表中，前端拦截并提示"文件格式不支持，请选择 XXX 格式文件"</li>
 </ul>
 <hr class="section-divider">
-<h3 id="3-4-模型检测">3.4 模型检测</h3>
+<h3 id="3-2-2-模型检测">3.2.2 模型检测</h3>
 <p><strong>对应原型文件：</strong> 模型检测.html</p>
 <p><strong>功能描述：</strong> 上传完成后自动触发的检测流程，验证文件大小合规性、可读性。RVT 额外判断 Revit 版本是否超过 2021；OSGB 压缩包额外校验包内文件格式是否正确。</p>
 <p><strong>页面结构：</strong></p>
@@ -807,269 +805,7 @@ flowchart TD
 <p>2. 检测通过 → 弹窗含绿色图标 → 点击"完成" → 状态更新为"上传成功"</p>
 <p>3. 检测不通过 → 弹窗显示失败原因（Revit2021 以上高版本请导出 IFC 后重新上传；或 OSGB 压缩包内格式不符）→ 点击"完成" → 状态更新为"检测不通过"，可在源模型管理中查看详情或重新上传</p>
 <hr class="section-divider">
-<h3 id="3-5-任务管理">3.5 任务管理</h3>
-<p><strong>对应原型文件：</strong> 任务管理.html</p>
-<p><strong>功能描述：</strong> 以任务卡片形式展示格式转换和轻量化任务的执行状态与结果，跟踪进度、查看对比数据、处理失败原因、添加结果至模型库。</p>
-<p><strong>页面结构：</strong></p>
-<ul>
-<li><strong>顶部操作栏：</strong> <code>重置</code>、<code>批量添加至模型库</code>、<code>批量删除</code></li>
-<li><strong>任务卡片列表（每个卡片包含）：</strong></li>
-</ul>
-<p><strong>基础信息：</strong></p>
-<div class="table-wrap"><table><thead><tr>
-<th><strong>字段</strong></th>
-<th><strong>说明</strong></th>
-<th><strong>示例值</strong></th>
-</tr></thead><tbody>
-<tr>
-<td>任务名称</td>
-<td>默认与所处理的模型名称一致；若命名重复，则在名称后自动追加序号（如"送水泵房泵组"、"送水泵房泵组1"、"送水泵房泵组2"…）</td>
-<td>送水泵房泵组</td>
-</tr>
-<tr>
-<td>任务类型</td>
-<td>格式转换 / 轻量化</td>
-<td>格式转换</td>
-</tr>
-<tr>
-<td>开始时间</td>
-<td>任务开始</td>
-<td>2025-09-01 14:30:00</td>
-</tr>
-<tr>
-<td>结束时间</td>
-<td>完成时间，未完成显"-"</td>
-<td>2025-09-01 14:42:00</td>
-</tr>
-<tr>
-<td>处理耗时</td>
-<td>耗时，未完成显"-"</td>
-<td>00:12:00</td>
-</tr>
-<tr>
-<td>任务状态</td>
-<td><span class="tag tag-yellow">进行中</span> / <span class="tag tag-green">已完成</span> / <span class="tag tag-red">失败</span></td>
-<td><span class="tag tag-green">已完成</span></td>
-</tr>
-</tbody></table></div>
-<p><strong>行内操作按钮（按任务状态驱动）：</strong></p>
-<div class="table-wrap"><table><thead><tr>
-<th><strong>任务状态</strong></th>
-<th><strong>可用按钮</strong></th>
-<th><strong>按钮样式说明</strong></th>
-</tr></thead><tbody>
-<tr>
-<td><span class="tag tag-yellow">进行中</span></td>
-<td>删除</td>
-<td>删除：红色可用</td>
-</tr>
-<tr>
-<td><span class="tag tag-green">已完成</span></td>
-<td>添加至模型库、预览、删除</td>
-<td>添加至模型库：白色可用；预览：白色可用；删除：红色可用</td>
-</tr>
-<tr>
-<td><span class="tag tag-green">已完成</span>且已添加至模型库</td>
-<td>已添加至模型库（禁用）、预览、删除</td>
-<td>已添加至模型库：绿色禁用（不可重复添加）；预览：白色可用；删除：红色可用</td>
-</tr>
-<tr>
-<td><span class="tag tag-red">失败</span></td>
-<td>可能原因、删除</td>
-<td>预览/添加至模型库：灰色禁用；可能原因：hover展示；删除：红色可用</td>
-</tr>
-</tbody></table></div>
-<blockquote>
-<p><strong>交互规则说明：</strong></p>
-</blockquote>
-<p>></p>
-<blockquote>
-<p>* 「添加至模型库」按钮仅在任务状态为「已完成」且未被添加过时，呈白色可用状态；一旦执行添加操作后，按钮变为「已添加至模型库」绿色禁用状态，不可重复添加。</p>
-<p>* 「预览」按钮在任务「已完成」时白色可用；「失败」或「进行中」时灰色禁用。</p>
-<p>* 「可能原因」图标仅在任务「失败」时显示，hover 展示后端返回的报错内容。</p>
-</blockquote>
-<p><strong>格式转换任务参数（转换成功后展示）：</strong></p>
-<div class="table-wrap"><table><thead><tr>
-<th><strong>参数</strong></th>
-<th><strong>示例值</strong></th>
-</tr></thead><tbody>
-<tr>
-<td>模型格式</td>
-<td>GLB</td>
-</tr>
-<tr>
-<td>模型大小</td>
-<td>0.21MB</td>
-</tr>
-</tbody></table></div>
-<blockquote>
-<p><strong>说明：</strong> 格式转换任务仅展示模型格式、模型大小两项参数，不展示模型面数、顶点数量。</p>
-</blockquote>
-<p><strong>轻量化任务对比详情（仅轻量化成功后展示）：</strong></p>
-<div class="table-wrap"><table><thead><tr>
-<th><strong>指标</strong></th>
-<th><strong>任务前</strong></th>
-<th><strong>任务后</strong></th>
-</tr></thead><tbody>
-<tr>
-<td>顶点数量</td>
-<td>363,365</td>
-<td>203,946</td>
-</tr>
-<tr>
-<td>模型面数</td>
-<td>—</td>
-<td>—</td>
-</tr>
-<tr>
-<td>模型格式</td>
-<td>GLB</td>
-<td>GLB</td>
-</tr>
-<tr>
-<td>模型大小</td>
-<td>0.21MB</td>
-<td>0.05MB</td>
-</tr>
-<tr>
-<td>网格数量</td>
-<td>12</td>
-<td>12</td>
-</tr>
-<tr>
-<td>纹理大小</td>
-<td>0.00MB</td>
-<td>0.00MB</td>
-</tr>
-</tbody></table></div>
-<p><strong>弹窗：</strong> <code>可能原因</code>——失败时点击弹出，显示"可能原因：模型体量过小"，说明"具体文字前端根据后端返回报错内容进行填入"。</p>
-<p><strong>分页：</strong> <code>共 400 条记录  第 1 / 80 页  [1]...[9]  跳至 [__] 页  [条/页▼]</code></p>
-<p><strong>交互流程：</strong></p>
-<p>1. 提交转换/轻量化后任务立即出现在此页。进行中显示开始时间，结束时间和耗时显示"-"</p>
-<p>2. 完成后显示实际结束时间和耗时，轻量化额外展示前后对比数据；按钮变为可用状态（白色）</p>
-<p>3. 失败时出现"可能原因"图标，hover图标展示后端返回的报错内容；预览和添加至模型库按钮灰色禁用</p>
-<p>4. 可单个或批量将成功结果"添加至模型库"，可"预览"查看结果</p>
-<p>5. 添加至模型库后，按钮变为绿色禁用状态"已添加至模型库"，不可重复添加</p>
-<p>6. 删除任务：删除某条任务记录（无论是否已添加至模型库）仅删除该条任务记录本身，与模型无关，不会删除该任务对应的模型；已添加至模型库的模型仍保留在我的模型库中</p>
-<hr class="section-divider">
-<h3 id="3-6-我的模型库">3.6 我的模型库</h3>
-<p><strong>对应原型文件：</strong> 我的模型库.html、发布服务.html</p>
-<p><strong>功能描述：</strong> 用户个人模型资源集中管理页，存放从源模型管理和任务管理添加的模型，支持预览、配准、转换、轻量化、发布服务。</p>
-<p><strong>页面结构：</strong></p>
-<ul>
-<li><strong>顶部操作栏：</strong> <code>批量删除</code>、<code>批量下载</code>、<code>重置</code></li>
-<li><strong>模型列表表格：</strong></li>
-</ul>
-<div class="table-wrap"><table><thead><tr>
-<th><strong>列名</strong></th>
-<th><strong>说明</strong></th>
-</tr></thead><tbody>
-<tr>
-<td>模型名称</td>
-<td>模型名称</td>
-</tr>
-<tr>
-<td>模型格式</td>
-<td>DXF / DWG / DWF / DGN / PLN / RVT / PCD / PLY / TXT/ LAS / OSGB / OBJ / FBX / STL / 3DS / DEM / TIFF / STEP</td>
-</tr>
-<tr>
-<td>模型大小</td>
-<td>文件大小</td>
-</tr>
-<tr>
-<td>添加时间</td>
-<td>添加至模型库的时间</td>
-</tr>
-<tr>
-<td>上传人员</td>
-<td>上传用户</td>
-</tr>
-<tr>
-<td>模型处理</td>
-<td>未处理 / 格式转换 / 轻量化，取值取决于用户在【源模型管理】中对该模型执行的操作（详见业务规则说明）</td>
-</tr>
-<tr>
-<td>操作</td>
-<td>查看、重命名、轻量化、参数配准、发布服务、下载、删除</td>
-</tr>
-</tbody></table></div>
-<ul>
-<li><strong>分页：</strong> <code>共 400 条记录  第 1 / 80 页  [1]...[9]  跳至 [__] 页  [条/页▼]</code></li>
-</ul>
-<p><strong>示例数据（8 条）：</strong> 送水泵房泵组（FBX/OBJ/GLB/STL/DGN）、配水泵房（RVT）、输水管道（FBX），上传人均为张小刚</p>
-<p><strong>行内操作按钮：</strong></p>
-<div class="table-wrap"><table><thead><tr>
-<th><strong>按钮</strong></th>
-<th><strong>说明</strong></th>
-</tr></thead><tbody>
-<tr>
-<td>查看</td>
-<td>跳转预览查看页面，在线预览 3D 模型</td>
-</tr>
-<tr>
-<td>格式转换</td>
-<td>提交格式转换任务</td>
-</tr>
-<tr>
-<td>轻量化</td>
-<td>跳转轻量化页面</td>
-</tr>
-<tr>
-<td>参数配准</td>
-<td>跳转参数配准页面</td>
-</tr>
-<tr>
-<td>发布服务</td>
-<td>弹出"发布模型服务"弹窗</td>
-</tr>
-<tr>
-<td>下载</td>
-<td>下载模型文件</td>
-</tr>
-<tr>
-<td>重命名</td>
-<td>弹出重命名弹窗</td>
-</tr>
-<tr>
-<td>删除</td>
-<td>从模型库删除</td>
-</tr>
-</tbody></table></div>
-<p><strong>弹窗：</strong></p>
-<p><strong>发布服务弹窗：</strong></p>
-<ul>
-<li>标题：<code>发布模型服务</code></li>
-<li><code>模型名称</code>（只读，回显当前名称）</li>
-<li><code>模型服务名称</code>（可编辑，默认填模型名称，支持修改）</li>
-<li>按钮：<code>取消</code> / <code>发布</code></li>
-</ul>
-<p><strong>重命名弹窗：</strong> 输入框 + 确定/取消</p>
-<p><strong>业务规则说明：</strong></p>
-<p>1. 一个模型可以发布为一个【模型服务】，模型服务名称默认为模型名称，支持修改</p>
-<p>2. 一个【场景服务】包含多个【模型服务】，新建一个场景服务，添加多个模型服务，发布成场景服务，名称可自定义</p>
-<p>3. 「模型处理」字段含义：该字段记录用户在【源模型管理】中对模型执行的操作——<br>• 点击【添加至模型库】→ 模型处理字段为「未处理」；<br>• 点击【格式转换】→ 模型处理字段为「格式转换」；<br>• 点击【轻量化】→ 模型处理字段为「轻量化」</p>
-<p><strong>交互流程：</strong></p>
-<p>1. 模型从源模型管理或任务管理添加至模型库，处理状态初始为"未处理"</p>
-<p>2. 点击"发布服务"→ 弹窗回显模型名称，服务名称可修改 → 确认发布</p>
-<p>3. 点击"重命名"→ 弹窗修改模型名称</p>
-<p>4. 点击"查看"→ 跳转预览查看页</p>
-<hr class="section-divider">
-<h3 id="3-7-预览查看">3.7 预览查看</h3>
-<p><strong>对应原型文件：</strong> 预览查看.html</p>
-<p><strong>功能描述：</strong> 3D 模型在线预览页，源格式在后台转为GLB或者3Dtiles格式才能在线预览，加载广州市GIS场景和该模型，支持模型平移、旋转、缩放。页面左侧为模型列表，右侧为 3D 预览。</p>
-<p><strong>页面结构：</strong></p>
-<p><strong>左侧 — 模型信息区：</strong> 展示模型源文件、格式、大小、面数、顶点、贴图等统计信息。</p>
-<p><strong>中部 — 3D 预览区：</strong> 可视化展示 BIM 模型。</p>
-<p><strong>右侧 — 构件详情浮窗：</strong> 在 3D 预览区内点击构件后弹出，展示选中构件属性信息（构件属性字段和数据不固定，根据属性json自动生成）。</p>
-<p><strong>交互操作：</strong></p>
-<ul>
-<li>页面右上角提供【返回】按钮，点击可退出当前模型预览页面；</li>
-<li>在中部 3D 预览区域内，点击任意模型构件，右侧弹出【构件详情】弹窗；</li>
-<li>构件详情分为「基本属性」「限制条件」两大模块，展示构件类别、族类型、截面参数、标高、偏移等信息；弹窗支持关闭；</li>
-<li>预览区左侧提供收起/展开控件按钮，支持左侧模型信息面板收起隐藏或者展开显示；</li>
-</ul>
-<hr class="section-divider">
-<h3 id="3-8-格式转换">3.8 格式转换</h3>
+<h3 id="3-2-3-格式转换">3.2.3 格式转换</h3>
 <p><strong>对应原型文件：</strong> 格式转换.html</p>
 <p><strong>功能描述：</strong> 将原始格式转换为 GLB、3Dtiles、Terrain、PNG 等目标格式。按数据类别提供不同参数面板，提交后生成任务进入任务管理。</p>
 <p><strong>交互说明：</strong></p>
@@ -1452,10 +1188,10 @@ flowchart TD
 </tbody></table></div>
 <p>弹窗仅包含"输出格式"和"同时发布成服务"两个参数，无坐标系和原点坐标设置。</p>
 <hr class="section-divider">
-<h3 id="3-9-轻量化">3.9 轻量化</h3>
+<h3 id="3-2-4-轻量化">3.2.4 轻量化</h3>
 <p><strong>对应原型文件：</strong> 轻量化.html</p>
 <p><strong>功能描述：</strong> 对 GLB 格式模型执行轻量化，采用二次误差边坍缩算法减面 + Draco 压缩 + 纹理压缩。页面分 4 个流程状态展示。</p>
-<h4 id="3-9-1-模型处理方案选择">3.9.1 模型处理方案选择</h4>
+<h4 id="3-2-4-1-模型处理方案选择">3.2.4.1 模型处理方案选择</h4>
 <p>提供4种处理方案，除「自定义处理」外，其余3种方案的参数均为<strong>预定义值、不可修改</strong>（参数输入框/开关置灰禁用）。各方案说明如下：</p>
 <p><strong>1. 推荐处理（Recommend）【默认选中】</strong></p>
 <ul>
@@ -1496,7 +1232,7 @@ flowchart TD
 <p>* 切换方案时：选中「推荐/极限/无损」→ 参数自动填充为预设值并锁定禁用；选中「自定义」→ 参数解锁为可编辑状态。</p>
 <p>* 用户手动修改任意参数后，自动切换选中「自定义处理」标签。</p>
 </blockquote>
-<h4 id="3-9-2-模型预览区域-画布">3.9.2 模型预览区域（画布）</h4>
+<h4 id="3-2-4-2-模型预览区域-画布">3.2.4.2 模型预览区域（画布）</h4>
 <p>1. 实时载入待处理三维模型，支持常规三维操作：旋转、平移、缩放查看模型效果；</p>
 <p>2. 点击【轻量化模型】按钮后，即轻量化任务执行期间，画布遮罩展示加载动画 + 文字「正在轻量化中……」；</p>
 <p>3. 任务完成后，右下角弹出<strong>模型处理报告</strong>悬浮面板，展示轻量化前后对比指标：</p>
@@ -1505,7 +1241,7 @@ flowchart TD
 <li>附加信息：节点数量、材质数量、图元数量、动画数量；</li>
 <li>底部展示状态文字：<code>压缩减面成功</code>。</li>
 </ul>
-<h4 id="3-9-3-底部操作按钮组">3.9.3 底部操作按钮组</h4>
+<h4 id="3-2-4-3-底部操作按钮组">3.2.4.3 底部操作按钮组</h4>
 <h5 id="">执行前置状态（未发起任务）</h5>
 <ul>
 <li><strong>轻量化模型（主按钮）</strong>：提交轻量化后台任务</li>
@@ -1517,7 +1253,7 @@ flowchart TD
 <p>1. <strong>还原模型</strong>：放弃轻量化结果，恢复至原始上传模型预览</p>
 <p>2. <strong>保存模型</strong>：将轻量化成果持久化至空间数据资源库</p>
 <p>3. <strong>下载模型</strong>：本地导出轻量化完成后的模型文件</p>
-<h4 id="3-9-4-通用交互规则">3.9.4 通用交互规则</h4>
+<h4 id="3-2-4-4-通用交互规则">3.2.4.4 通用交互规则</h4>
 <p>1. <strong>返回按钮</strong>：左上角【返回】，点击退出模型轻量化页面，回到上一级空间数据列表；</p>
 <p>2. 用户会话信息：右上角展示登录账号名称；</p>
 <p>3. 参数联动约束：</p>
@@ -1533,7 +1269,258 @@ flowchart TD
 <p>3. 任务完成后，右下角弹出处理报告，展示前后对比数据；可保存/下载/还原模型</p>
 <p>4. 已轻量化可再次轻量化，但不保证成功，可能失败原因是模型本身已经足够轻量了，再进行轻量化算法会报错</p>
 <hr class="section-divider">
-<h3 id="3-10-参数配准">3.10 参数配准</h3>
+<h3 id="3-3-任务管理">3.3 任务管理</h3>
+<p><strong>对应原型文件：</strong> 任务管理.html</p>
+<p><strong>功能描述：</strong> 以任务卡片形式展示格式转换和轻量化任务的执行状态与结果，跟踪进度、查看对比数据、处理失败原因、添加结果至模型库。</p>
+<p><strong>页面结构：</strong></p>
+<ul>
+<li><strong>顶部操作栏：</strong> <code>重置</code>、<code>批量添加至模型库</code>、<code>批量删除</code></li>
+<li><strong>任务卡片列表（每个卡片包含）：</strong></li>
+</ul>
+<p><strong>基础信息：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>字段</strong></th>
+<th><strong>说明</strong></th>
+<th><strong>示例值</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>任务名称</td>
+<td>默认与所处理的模型名称一致；若命名重复，则在名称后自动追加序号（如"送水泵房泵组"、"送水泵房泵组1"、"送水泵房泵组2"…）</td>
+<td>送水泵房泵组</td>
+</tr>
+<tr>
+<td>任务类型</td>
+<td>格式转换 / 轻量化</td>
+<td>格式转换</td>
+</tr>
+<tr>
+<td>开始时间</td>
+<td>任务开始</td>
+<td>2025-09-01 14:30:00</td>
+</tr>
+<tr>
+<td>结束时间</td>
+<td>完成时间，未完成显"-"</td>
+<td>2025-09-01 14:42:00</td>
+</tr>
+<tr>
+<td>处理耗时</td>
+<td>耗时，未完成显"-"</td>
+<td>00:12:00</td>
+</tr>
+<tr>
+<td>任务状态</td>
+<td><span class="tag tag-yellow">进行中</span> / <span class="tag tag-green">已完成</span> / <span class="tag tag-red">失败</span></td>
+<td><span class="tag tag-green">已完成</span></td>
+</tr>
+</tbody></table></div>
+<p><strong>行内操作按钮（按任务状态驱动）：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>任务状态</strong></th>
+<th><strong>可用按钮</strong></th>
+<th><strong>按钮样式说明</strong></th>
+</tr></thead><tbody>
+<tr>
+<td><span class="tag tag-yellow">进行中</span></td>
+<td>删除</td>
+<td>删除：红色可用</td>
+</tr>
+<tr>
+<td><span class="tag tag-green">已完成</span></td>
+<td>添加至模型库、预览、删除</td>
+<td>添加至模型库：白色可用；预览：白色可用；删除：红色可用</td>
+</tr>
+<tr>
+<td><span class="tag tag-green">已完成</span>且已添加至模型库</td>
+<td>已添加至模型库（禁用）、预览、删除</td>
+<td>已添加至模型库：绿色禁用（不可重复添加）；预览：白色可用；删除：红色可用</td>
+</tr>
+<tr>
+<td><span class="tag tag-red">失败</span></td>
+<td>可能原因、删除</td>
+<td>预览/添加至模型库：灰色禁用；可能原因：hover展示；删除：红色可用</td>
+</tr>
+</tbody></table></div>
+<blockquote>
+<p><strong>交互规则说明：</strong></p>
+</blockquote>
+<p>></p>
+<blockquote>
+<p>* 「添加至模型库」按钮仅在任务状态为「已完成」且未被添加过时，呈白色可用状态；一旦执行添加操作后，按钮变为「已添加至模型库」绿色禁用状态，不可重复添加。</p>
+<p>* 「预览」按钮在任务「已完成」时白色可用；「失败」或「进行中」时灰色禁用。</p>
+<p>* 「可能原因」图标仅在任务「失败」时显示，hover 展示后端返回的报错内容。</p>
+</blockquote>
+<p><strong>格式转换任务参数（转换成功后展示）：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>参数</strong></th>
+<th><strong>示例值</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>模型格式</td>
+<td>GLB</td>
+</tr>
+<tr>
+<td>模型大小</td>
+<td>0.21MB</td>
+</tr>
+</tbody></table></div>
+<blockquote>
+<p><strong>说明：</strong> 格式转换任务仅展示模型格式、模型大小两项参数，不展示模型面数、顶点数量。</p>
+</blockquote>
+<p><strong>轻量化任务对比详情（仅轻量化成功后展示）：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>指标</strong></th>
+<th><strong>任务前</strong></th>
+<th><strong>任务后</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>顶点数量</td>
+<td>363,365</td>
+<td>203,946</td>
+</tr>
+<tr>
+<td>模型面数</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>模型格式</td>
+<td>GLB</td>
+<td>GLB</td>
+</tr>
+<tr>
+<td>模型大小</td>
+<td>0.21MB</td>
+<td>0.05MB</td>
+</tr>
+<tr>
+<td>网格数量</td>
+<td>12</td>
+<td>12</td>
+</tr>
+<tr>
+<td>纹理大小</td>
+<td>0.00MB</td>
+<td>0.00MB</td>
+</tr>
+</tbody></table></div>
+<p><strong>弹窗：</strong> <code>可能原因</code>——失败时点击弹出，显示"可能原因：模型体量过小"，说明"具体文字前端根据后端返回报错内容进行填入"。</p>
+<p><strong>分页：</strong> <code>共 400 条记录  第 1 / 80 页  [1]...[9]  跳至 [__] 页  [条/页▼]</code></p>
+<p><strong>交互流程：</strong></p>
+<p>1. 提交转换/轻量化后任务立即出现在此页。进行中显示开始时间，结束时间和耗时显示"-"</p>
+<p>2. 完成后显示实际结束时间和耗时，轻量化额外展示前后对比数据；按钮变为可用状态（白色）</p>
+<p>3. 失败时出现"可能原因"图标，hover图标展示后端返回的报错内容；预览和添加至模型库按钮灰色禁用</p>
+<p>4. 可单个或批量将成功结果"添加至模型库"，可"预览"查看结果</p>
+<p>5. 添加至模型库后，按钮变为绿色禁用状态"已添加至模型库"，不可重复添加</p>
+<p>6. 删除任务：删除某条任务记录（无论是否已添加至模型库）仅删除该条任务记录本身，与模型无关，不会删除该任务对应的模型；已添加至模型库的模型仍保留在我的模型库中</p>
+<hr class="section-divider">
+<h3 id="3-4-我的模型库">3.4 我的模型库</h3>
+<p><strong>对应原型文件：</strong> 我的模型库.html</p>
+<p><strong>功能描述：</strong> 用户个人模型资源集中管理页，存放从源模型管理和任务管理添加的模型，支持预览、配准、转换、轻量化。</p>
+<p><strong>页面结构：</strong></p>
+<ul>
+<li><strong>顶部操作栏：</strong> <code>批量删除</code>、<code>批量下载</code>、<code>重置</code></li>
+<li><strong>模型列表表格：</strong></li>
+</ul>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>列名</strong></th>
+<th><strong>说明</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>模型名称</td>
+<td>模型名称</td>
+</tr>
+<tr>
+<td>模型格式</td>
+<td>DXF / DWG / DWF / DGN / PLN / RVT / PCD / PLY / TXT/ LAS / OSGB / OBJ / FBX / STL / 3DS / DEM / TIFF / STEP</td>
+</tr>
+<tr>
+<td>模型大小</td>
+<td>文件大小</td>
+</tr>
+<tr>
+<td>添加时间</td>
+<td>添加至模型库的时间</td>
+</tr>
+<tr>
+<td>上传人员</td>
+<td>上传用户</td>
+</tr>
+<tr>
+<td>模型处理</td>
+<td>未处理 / 格式转换 / 轻量化，取值取决于用户在【源模型管理】中对该模型执行的操作（详见业务规则说明）</td>
+</tr>
+<tr>
+<td>操作</td>
+<td>查看、重命名、轻量化、参数配准、下载、删除</td>
+</tr>
+</tbody></table></div>
+<ul>
+<li><strong>分页：</strong> <code>共 400 条记录  第 1 / 80 页  [1]...[9]  跳至 [__] 页  [条/页▼]</code></li>
+</ul>
+<p><strong>示例数据（8 条）：</strong> 送水泵房泵组（FBX/OBJ/GLB/STL/DGN）、配水泵房（RVT）、输水管道（FBX），上传人均为张小刚</p>
+<p><strong>行内操作按钮：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>按钮</strong></th>
+<th><strong>说明</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>查看</td>
+<td>跳转预览查看页面，在线预览 3D 模型</td>
+</tr>
+<tr>
+<td>格式转换</td>
+<td>提交格式转换任务</td>
+</tr>
+<tr>
+<td>轻量化</td>
+<td>跳转轻量化页面</td>
+</tr>
+<tr>
+<td>参数配准</td>
+<td>跳转参数配准页面</td>
+</tr>
+<tr>
+<td>下载</td>
+<td>下载模型文件</td>
+</tr>
+<tr>
+<td>重命名</td>
+<td>弹出重命名弹窗</td>
+</tr>
+<tr>
+<td>删除</td>
+<td>从模型库删除。删除时校验该模型是否已绑定场景服务，若已绑定则不可删除并提示"该模型已绑定场景服务，无法删除"；若未绑定则可以删除</td>
+</tr>
+</tbody></table></div>
+<p><strong>弹窗：</strong></p>
+<p><strong>重命名弹窗：</strong> 输入框 + 确定/取消</p>
+<p><strong>删除校验提示：</strong> 若模型已绑定场景服务，点击"删除"时弹出提示"该模型已绑定场景服务，无法删除"，不可执行删除操作。</p>
+<p><strong>业务规则说明：</strong></p>
+<p>1. 一个【场景服务】可绑定多个模型，模型来源为【我的模型库】，场景服务名称可自定义</p>
+<p>2. 「模型处理」字段含义：该字段记录用户在【源模型管理】中对模型执行的操作——<br>• 点击【添加至模型库】→ 模型处理字段为「未处理」；<br>• 点击【格式转换】→ 模型处理字段为「格式转换」；<br>• 点击【轻量化】→ 模型处理字段为「轻量化」</p>
+<p><strong>交互流程：</strong></p>
+<p>1. 模型从源模型管理或任务管理添加至模型库，处理状态初始为"未处理"</p>
+<p>2. 点击"重命名"-> 弹窗修改模型名称</p>
+<p>3. 点击"查看"-> 跳转预览查看页</p>
+<p>4. 点击"删除"-> 校验该模型是否已绑定场景服务，若已绑定则提示"该模型已绑定场景服务，无法删除"；若未绑定则确认删除</p>
+<hr class="section-divider">
+<h3 id="3-4-1-预览查看">3.4.1 预览查看</h3>
+<p><strong>对应原型文件：</strong> 预览查看.html</p>
+<p><strong>功能描述：</strong> 3D 模型在线预览页，源格式在后台转为GLB或者3Dtiles格式才能在线预览，加载广州市GIS场景和该模型，支持模型平移、旋转、缩放。页面左侧为模型列表，右侧为 3D 预览。</p>
+<p><strong>页面结构：</strong></p>
+<p><strong>左侧 — 模型信息区：</strong> 展示模型源文件、格式、大小、面数、顶点、贴图等统计信息。</p>
+<p><strong>中部 — 3D 预览区：</strong> 可视化展示 BIM 模型。</p>
+<p><strong>右侧 — 构件详情浮窗：</strong> 在 3D 预览区内点击构件后弹出，展示选中构件属性信息（构件属性字段和数据不固定，根据属性json自动生成）。</p>
+<p><strong>交互操作：</strong></p>
+<ul>
+<li>页面右上角提供【返回】按钮，点击可退出当前模型预览页面；</li>
+<li>在中部 3D 预览区域内，点击任意模型构件，右侧弹出【构件详情】弹窗；</li>
+<li>构件详情分为「基本属性」「限制条件」两大模块，展示构件类别、族类型、截面参数、标高、偏移等信息；弹窗支持关闭；</li>
+<li>预览区左侧提供收起/展开控件按钮，支持左侧模型信息面板收起隐藏或者展开显示；</li>
+</ul>
+<hr class="section-divider">
+<h3 id="3-4-2-参数配准">3.4.2 参数配准</h3>
 <p><strong>对应原型文件：</strong> 参数配准.html</p>
 <p><strong>功能描述：</strong> 配置模型的坐标基点、旋转角度、偏移量，使模型准确叠加到三维地理场景。</p>
 <p><strong>页面结构：</strong></p>
@@ -1570,76 +1557,9 @@ flowchart TD
 <p>2. 分别设置三个参数，每个参数有独立"恢复"按钮恢复默认值</p>
 <p>3. 点击"保存"保存配置，"退出"返回我的模型库</p>
 <hr class="section-divider">
-<h3 id="3-11-模型服务">3.11 模型服务</h3>
-<p><strong>对应原型文件：</strong> 模型服务.html</p>
-<p><strong>功能描述：</strong> 管理已发布的模型服务（每个对应一个模型，对外提供 3Dtiles 接口），支持创建、启用/停用、编辑、删除、预览。</p>
-<p><strong>页面结构：</strong></p>
-<ul>
-<li><strong>顶部：</strong> <code>创建模型服务</code>、<code>批量删除</code>、<code>重置</code></li>
-<li><strong>表格：</strong></li>
-</ul>
-<div class="table-wrap"><table><thead><tr>
-<th><strong>列名</strong></th>
-<th><strong>说明</strong></th>
-</tr></thead><tbody>
-<tr>
-<td>模型服务名称</td>
-<td>服务名称</td>
-</tr>
-<tr>
-<td>模型名称</td>
-<td>关联源模型</td>
-</tr>
-<tr>
-<td>创建时间</td>
-<td>2025-01-01 14:00:00</td>
-</tr>
-<tr>
-<td>服务地址</td>
-<td><code>http://192.167.2.127:4225/distribution/model/...</code></td>
-</tr>
-<tr>
-<td>启用状态</td>
-<td>Switch 开关 On/Off</td>
-</tr>
-<tr>
-<td>操作</td>
-<td>编辑、删除、预览</td>
-</tr>
-</tbody></table></div>
-<ul>
-<li><strong>分页组件</strong></li>
-</ul>
-<p><strong>示例数据（8条）：</strong> 厂区倾斜摄影、送水泵组、斜管浓缩池、1#吸水井、1#出水管、送水泵房、排泥车、输水管道。6 个 Switch 为 On，1 个为 Off。</p>
-<p><strong>创建模型服务弹窗（3 状态）：</strong></p>
-<div class="table-wrap"><table><thead><tr>
-<th><strong>状态</strong></th>
-<th><strong>内容</strong></th>
-</tr></thead><tbody>
-<tr>
-<td>状态1</td>
-<td>标题 <code>创建模型服务</code>，输入 <code>模型服务名称</code>（placeholder: "请输入模型服务名称"），下拉 <code>请选择模型…</code>，按钮 <code>创建模型服务</code>/<code>取消</code></td>
-</tr>
-<tr>
-<td>状态2</td>
-<td>标题 <code>选择模型</code>，搜索框 + Search icon + Clear 按钮，模型列表（含选中标记），<code>已选择：送水泵房泵组</code> 回显，<code>确定</code>/<code>取消</code></td>
-</tr>
-<tr>
-<td>状态3</td>
-<td>回显已选模型名称，"已选择"状态标记</td>
-</tr>
-</tbody></table></div>
-<p><strong>业务规则说明：</strong></p>
-<p>1. 模型服务编辑，只能编辑模型服务名称</p>
-<p>2. 场景服务编辑，可以编辑场景服务名称、以及移除或添加模型服务</p>
-<p><strong>交互流程：</strong></p>
-<p>1. 点击"创建模型服务"→ 弹窗状态1 填写名称</p>
-<p>2. 点击"请选择模型…"→ 状态2 搜索/勾选模型 → "确定"回状态1</p>
-<p>3. 确认创建，Switch 控制启用/停用，编辑仅限改名称</p>
-<hr class="section-divider">
-<h3 id="3-12-场景服务">3.12 场景服务</h3>
+<h3 id="3-5-场景服务">3.5 场景服务</h3>
 <p><strong>对应原型文件：</strong> 场景服务.html</p>
-<p><strong>功能描述：</strong> 管理场景服务，每个场景可包含多个模型服务，实现复合场景发布与管理。</p>
+<p><strong>功能描述：</strong> 管理场景服务，每个场景可绑定多个模型（模型来源我的模型库），实现复合场景发布与管理。</p>
 <p><strong>页面结构：</strong></p>
 <ul>
 <li><strong>顶部：</strong> <code>创建场景服务</code>、<code>批量删除</code>、<code>重置</code></li>
@@ -1654,8 +1574,8 @@ flowchart TD
 <td>场景名称</td>
 </tr>
 <tr>
-<td>模型服务名称</td>
-<td>包含的模型服务（逗号分隔）</td>
+<td>模型名称</td>
+<td>绑定的模型（逗号分隔，来源我的模型库）</td>
 </tr>
 <tr>
 <td>创建时间</td>
@@ -1685,25 +1605,53 @@ flowchart TD
 </tr></thead><tbody>
 <tr>
 <td>状态1</td>
-<td>标题 <code>创建场景服务</code>，标签 <code>模型服务选择</code>，输入 <code>场景服务名称</code>（placeholder: "请输入场景服务名称"），下拉 <code>请选择模型…</code>，<code>创建场景服务</code>/<code>取消</code></td>
+<td>标题 <code>创建场景服务</code>，标签 <code>模型选择</code>，输入 <code>场景服务名称</code>（placeholder: "请输入场景服务名称"），下拉 <code>请选择模型…</code>（模型来源我的模型库），<code>创建场景服务</code>/<code>取消</code></td>
 </tr>
 <tr>
 <td>状态2</td>
-<td>标题 <code>选择模型服务</code>，搜索 + icon + Clear，模型服务列表（多选），<code>已选择：</code> 回显，<code>确定</code>/<code>取消</code></td>
+<td>标题 <code>选择模型</code>，搜索 + icon + Clear，模型列表（多选，来源我的模型库），<code>已选择：</code> 回显，<code>确定</code>/<code>取消</code></td>
 </tr>
 <tr>
 <td>状态3</td>
-<td>回显已选模型服务列表，"已选择"状态</td>
+<td>回显已选模型列表，"已选择"状态</td>
 </tr>
 </tbody></table></div>
-<p><strong>编辑区别说明（同 3.11 底部）：</strong> 场景服务编辑可改名称+增删模型服务；模型服务编辑仅改名称。</p>
+<p><strong>编辑弹窗：</strong></p>
+<div class="table-wrap"><table><thead><tr>
+<th><strong>字段</strong></th>
+<th><strong>可否修改</strong></th>
+<th><strong>说明</strong></th>
+</tr></thead><tbody>
+<tr>
+<td>场景服务名称</td>
+<td>可修改</td>
+<td>输入框，可编辑场景服务名称</td>
+</tr>
+<tr>
+<td>模型名称</td>
+<td>可修改</td>
+<td>可添加或移除绑定的模型（来源我的模型库）</td>
+</tr>
+<tr>
+<td>启用状态</td>
+<td>可修改</td>
+<td>Switch 开关，控制启用/禁用</td>
+</tr>
+<tr>
+<td>服务地址</td>
+<td>只可复制，不可修改</td>
+<td>提供复制按钮，地址内容只读不可编辑</td>
+</tr>
+</tbody></table></div>
+<p><strong>预览按钮规则：</strong> 若启用状态设置为禁用，则预览按钮禁用置灰，不可点击；启用状态下预览按钮正常可用。</p>
 <p><strong>交互流程：</strong></p>
 <p>1. 点击"创建场景服务"→ 状态1 填写名称</p>
-<p>2. 状态2 搜索/多选模型服务 → "确定"回状态1</p>
-<p>3. 确认创建，"模型服务名称"列逗号分隔展示，Switch 控制启用</p>
-<p>4. 编辑可改名称及增删模型服务</p>
+<p>2. 状态2 搜索/多选模型（来源我的模型库）→ "确定"回状态1</p>
+<p>3. 确认创建，"模型名称"列逗号分隔展示，Switch 控制启用</p>
+<p>4. 点击"编辑"→ 弹出编辑弹窗，可修改场景服务名称、模型名称、启用状态；服务地址只可复制不可修改</p>
+<p>5. 若启用状态设置为禁用，预览按钮禁用置灰，不可点击</p>
 <hr class="section-divider">
-<h3 id="3-13-空间数据统计">3.13 空间数据统计</h3>
+<h3 id="3-6-空间数据统计">3.6 空间数据统计</h3>
 <p><strong>对应原型文件：</strong> 空间数据统计.html</p>
 <p><strong>功能描述：</strong> 可视化展示空间数据统计信息，含统计指标卡片、多类图表和详细下载排行数据表格。页面为左侧导航菜单 + 右侧内容区的布局，左侧可切换"空间数据管理"和"空间数据服务"两个菜单组（原型中以蓝色选中态高亮当前页），右侧展示统计内容。</p>
 <p><strong>页面结构：</strong></p>
@@ -1731,7 +1679,7 @@ flowchart TD
 <tr>
 <td>服务总数量</td>
 <td>70个</td>
-<td>模型服务 + 场景服务的总数量</td>
+<td>场景服务的总数量</td>
 </tr>
 </tbody></table></div>
 <blockquote>
@@ -1803,7 +1751,7 @@ flowchart TD
 <li>展示形式：竖向排行列表，每个条目展示排名徽章（TOP1~TOP5）+ 模型名称</li>
 <li>TOP1 条目放大突出显示，TOP2-5 依次排列</li>
 <li>原型示例数据：TOP1 送水泵房、TOP2 原水前池，TOP3-5 为后续排名模型</li>
-<li>点击右上方的下拉选项可以筛选全部、模型服务、场景服务</li>
+<li>点击右上方的下拉选项可以筛选全部、场景服务</li>
 </ul>
 <p><strong>底部表格（全宽）：</strong></p>
 <ul>
